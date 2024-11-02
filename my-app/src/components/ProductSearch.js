@@ -1,133 +1,188 @@
-// src/ProductSearch.js
-
+import React, { useState } from 'react';
 import { FiHeart, FiShoppingCart, FiSearch } from 'react-icons/fi';
 
+// Sample product data
 const products = [
     {
-        name: "Mbabatetsi",
-        price: "MWK6000/3kg",
-        img: "https://via.placeholder.com/150", // Replace with actual image URL
+        name: "Mbatatesi",
+        category: "Crops",
+        price: 6000,
+        unit: "3kg",
+        img: "https://via.placeholder.com/150",
         rating: 5,
+        tags: ["New"],
     },
     {
         name: "Rice Kilombelo",
-        price: "MWK4000/kg",
-        img: "https://via.placeholder.com/150", // Replace with actual image URL
+        category: "Crops",
+        price: 4000,
+        unit: "1kg",
+        img: "https://via.placeholder.com/150",
         rating: 5,
+        tags: ["Trending"],
     },
     {
         name: "Goat",
-        price: "MWK12000/each",
-        img: "https://via.placeholder.com/150", // Replace with actual image URL
+        category: "LiveStock",
+        price: 20000,
+        unit: "each",
+        img: "https://via.placeholder.com/150",
         rating: 5,
-    },
-    {
-        name: "Mbabatetsi",
-        price: "MWK6000/3kg",
-        img: "https://via.placeholder.com/150", // Replace with actual image URL
-        rating: 5,
-    },
-    {
-        name: "Rice Kilombelo",
-        price: "MWK4000/kg",
-        img: "https://via.placeholder.com/150", // Replace with actual image URL
-        rating: 5,
-    },
-    {
-        name: "Goat",
-        price: "MWK12000/each",
-        img: "https://via.placeholder.com/150", // Replace with actual image URL
-        rating: 5,
+        tags: ["Label"],
     },
 ];
 
 const ProductSearch = () => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedCategories, setSelectedCategories] = useState(['Crops', 'LiveStock']);
+    const [priceRange, setPriceRange] = useState([0, 10000]);
+    const [selectedTags, setSelectedTags] = useState([]);
+    const [likedProducts, setLikedProducts] = useState([]);
+
+    const handleSearch = (e) => setSearchTerm(e.target.value);
+
+    const handleCategoryChange = (category) => {
+        setSelectedCategories((prev) =>
+            prev.includes(category)
+                ? prev.filter((c) => c !== category)
+                : [...prev, category]
+        );
+    };
+
+    const handlePriceChange = (e) => setPriceRange([0, parseInt(e.target.value)]);
+
+    const handleTagChange = (tag) => {
+        setSelectedTags((prev) =>
+            prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+        );
+    };
+
+    const toggleLike = (productName) => {
+        setLikedProducts((prev) =>
+            prev.includes(productName)
+                ? prev.filter((name) => name !== productName)
+                : [...prev, productName]
+        );
+    };
+
+    const filteredProducts = products.filter((product) => {
+        const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(product.category);
+        const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
+        const matchesTags = selectedTags.length === 0 || selectedTags.some((tag) => product.tags.includes(tag));
+
+        return matchesSearch && matchesCategory && matchesPrice && matchesTags;
+    });
+
     return (
-        <div className="flex min-h-screen bg-gray-50">
-            {/* Sidebar */}
-            <aside className="w-1/4 bg-white p-6 shadow-md">
-                <h2 className="text-xl font-bold mb-6">Filter By</h2>
-                <div className="mb-6">
-                    <h3 className="font-semibold text-lg">Categories</h3>
-                    <div className="flex items-center my-2">
-                        <input type="checkbox" className="mr-2" defaultChecked />
-                        <label>Crops</label>
-                    </div>
-                    <div className="flex items-center my-2">
-                        <input type="checkbox" className="mr-2" defaultChecked />
-                        <label>Machinery</label>
-                    </div>
-                    <div className="flex items-center my-2">
-                        <input type="checkbox" className="mr-2" defaultChecked />
-                        <label>Livestock</label>
-                    </div>
+        <div className="flex p-8">
+            {/* Sidebar Filters */}
+            <div className="w-1/4 p-4 bg-gray-100 rounded-lg">
+                <h2 className="font-bold mb-4">Filter By</h2>
+
+                {/* Category Filter */}
+                <div className="mb-4">
+                    <h3 className="font-semibold">Categories</h3>
+                    <label className="block">
+                        <input
+                            type="checkbox"
+                            onChange={() => handleCategoryChange('Crops')}
+                            checked={selectedCategories.includes('Crops')}
+                        />{' '}
+                        Crops
+                    </label>
+                    <label className="block">
+                        <input
+                            type="checkbox"
+                            onChange={() => handleCategoryChange('LiveStock')}
+                            checked={selectedCategories.includes('LiveStock')}
+                        />{' '}
+                        LiveStock
+                    </label>
                 </div>
 
-                <div className="mb-6">
-                    <h3 className="font-semibold text-lg">Price</h3>
-                    <input type="range" min="0" max="10000" className="w-full mt-2" />
-                    <div className="flex justify-between text-sm">
-                        <span>MWK0</span>
-                        <span>MWK10000</span>
-                    </div>
+                {/* Price Filter */}
+                <div className="mb-4">
+                    <h3 className="font-semibold">Price</h3>
+                    <input
+                        type="range"
+                        min="0"
+                        max="10000"
+                        value={priceRange[1]}
+                        onChange={handlePriceChange}
+                        className="w-full"
+                    />
+                    <p>MWK0 - MWK{priceRange[1]}</p>
                 </div>
 
-                <div className="mb-6">
-                    <h3 className="font-semibold text-lg">Tags</h3>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                        {['Vegetables', 'Agrochemicals', 'Animal Feed', 'New', 'Trending', 'Label'].map((tag, index) => (
-                            <button key={index} className="bg-gray-200 px-2 py-1 rounded text-sm">
-                                {tag}
-                            </button>
-                        ))}
-                    </div>
+                {/* Tags Filter */}
+                <div>
+                    <h3 className="font-semibold">Tags</h3>
+                    <label className="block">
+                        <input
+                            type="checkbox"
+                            onChange={() => handleTagChange('New')}
+                            checked={selectedTags.includes('New')}
+                        />{' '}
+                        New
+                    </label>
+                    <label className="block">
+                        <input
+                            type="checkbox"
+                            onChange={() => handleTagChange('Trending')}
+                            checked={selectedTags.includes('Trending')}
+                        />{' '}
+                        Trending
+                    </label>
+                    <label className="block">
+                        <input
+                            type="checkbox"
+                            onChange={() => handleTagChange('Label')}
+                            checked={selectedTags.includes('Label')}
+                        />{' '}
+                        Label
+                    </label>
                 </div>
-            </aside>
+            </div>
 
-            {/* Main Content */}
-            <main className="flex-grow p-6">
+            {/* Product List */}
+            <div className="w-3/4 ml-8">
                 {/* Search Bar */}
-                <div className="flex items-center bg-white p-4 rounded shadow mb-6">
+                <div className="flex items-center mb-4">
+                    <FiSearch className="mr-2" />
                     <input
                         type="text"
                         placeholder="Looking for what?"
-                        className="flex-grow p-2 outline-none"
+                        value={searchTerm}
+                        onChange={handleSearch}
+                        className="border border-gray-300 rounded p-2 w-full"
                     />
-                    <FiSearch className="text-gray-500 text-lg ml-4" />
                 </div>
 
                 {/* Product Grid */}
-                <div className="grid grid-cols-2 gap-6">
-                    {products.map((product, index) => (
-                        <div key={index} className="bg-white p-4 shadow rounded-lg relative">
-                            <img src={product.img} alt={product.name} className="w-full h-48 object-cover rounded-md mb-4" />
-                            <button className="absolute top-2 right-2 text-gray-500">
-                                <FiHeart className="text-lg" />
-                            </button>
-                            <h3 className="text-lg font-semibold mb-1">{product.name}</h3>
-                            <p className="text-gray-700">{product.price}</p>
-                            <div className="flex items-center mt-2">
-                                <span className="text-yellow-500 mr-2">{'★'.repeat(product.rating)}</span>
-                                <span className="text-gray-500">({product.rating * 15})</span>
+                <div className="grid grid-cols-2 gap-4">
+                    {filteredProducts.length > 0 ? (
+                        filteredProducts.map((product) => (
+                            <div key={product.name} className="border rounded-lg p-4 shadow-sm">
+                                <img src={product.img} alt={product.name} className="w-full h-40 object-cover mb-2 rounded" />
+                                <h4 className="font-semibold">{product.name}</h4>
+                                <p className="text-sm text-gray-600">MWK{product.price}/{product.unit}</p>
+                                <p className="text-yellow-500">{'⭐'.repeat(product.rating)}</p>
+                                <div className="flex justify-between items-center mt-2">
+                                    <button onClick={() => toggleLike(product.name)} className="text-red-500">
+                                        <FiHeart className={likedProducts.includes(product.name) ? 'fill-current' : ''} />
+                                    </button>
+                                    <button className="text-gray-700">
+                                        <FiShoppingCart />
+                                    </button>
+                                </div>
                             </div>
-                            <button className="w-full mt-4 bg-blue-500 text-white py-2 rounded flex items-center justify-center gap-2">
-                                <FiShoppingCart /> Add to Cart
-                            </button>
-                        </div>
-                    ))}
+                        ))
+                    ) : (
+                        <p>No products found matching your criteria.</p>
+                    )}
                 </div>
-
-                {/* Pagination */}
-                <div className="flex justify-center mt-8">
-                    <button className="px-4 py-2 bg-gray-200 rounded-l text-gray-600">Previous</button>
-                    <button className="px-4 py-2 bg-blue-500 text-white">1</button>
-                    <button className="px-4 py-2 bg-gray-200 text-gray-600">2</button>
-                    <button className="px-4 py-2 bg-gray-200 text-gray-600">3</button>
-                    <span className="px-4 py-2">...</span>
-                    <button className="px-4 py-2 bg-gray-200 text-gray-600">67</button>
-                    <button className="px-4 py-2 bg-gray-200 rounded-r text-gray-600">Next</button>
-                </div>
-            </main>
+            </div>
         </div>
     );
 };
