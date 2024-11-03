@@ -24,17 +24,20 @@ const products = [
     {
         name: "Goat",
         category: "LiveStock",
-        price: 20000,
+        price: 10000,
         unit: "each",
         img: "https://via.placeholder.com/150",
         rating: 5,
         tags: ["Label"],
     },
+    // Add more products for different categories as needed
 ];
 
 const ProductSearch = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [selectedCategories, setSelectedCategories] = useState(['Crops', 'LiveStock']);
+    const [selectedCategories, setSelectedCategories] = useState([
+        'Crops', 'Machinery', 'Agrochemicals', 'Fertilizers', 'Seeds', 'Dairy', 'Poultry', 'Fruits', 'Animal Feed', 'Farm Tools','LiveStock'
+    ]);
     const [priceRange, setPriceRange] = useState([0, 10000]);
     const [selectedTags, setSelectedTags] = useState([]);
     const [likedProducts, setLikedProducts] = useState([]);
@@ -83,22 +86,19 @@ const ProductSearch = () => {
                 {/* Category Filter */}
                 <div className="mb-4">
                     <h3 className="font-semibold">Categories</h3>
-                    <label className="block">
-                        <input
-                            type="checkbox"
-                            onChange={() => handleCategoryChange('Crops')}
-                            checked={selectedCategories.includes('Crops')}
-                        />{' '}
-                        Crops
-                    </label>
-                    <label className="block">
-                        <input
-                            type="checkbox"
-                            onChange={() => handleCategoryChange('LiveStock')}
-                            checked={selectedCategories.includes('LiveStock')}
-                        />{' '}
-                        LiveStock
-                    </label>
+                    {[
+                        'Crops', 'Machinery', 'Agrochemicals', 'Fertilizers', 'Seeds',
+                        'Dairy', 'Poultry', 'Fruits', 'Animal Feed', 'Farm Tools','LiveStock'
+                    ].map((category) => (
+                        <label className="block" key={category}>
+                            <input
+                                type="checkbox"
+                                onChange={() => handleCategoryChange(category)}
+                                checked={selectedCategories.includes(category)}
+                            />{' '}
+                            {category}
+                        </label>
+                    ))}
                 </div>
 
                 {/* Price Filter */}
