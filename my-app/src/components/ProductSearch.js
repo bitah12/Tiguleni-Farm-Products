@@ -258,22 +258,36 @@ const ProductSearch = () => {
                 </div>
 
                 {/* Product Grid */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-3 gap-4">
                     {filteredProducts.length > 0 ? (
                         filteredProducts.map((product) => (
-                            <div key={product.name} className="border rounded-lg p-4 shadow-sm">
-                                <img src={product.img} alt={product.name} className="w-full h-40 object-cover mb-2 rounded" />
-                                <h4 className="font-semibold">{product.name}</h4>
-                                <p className="text-sm text-gray-600">MWK{product.price}/{product.unit}</p>
-                                <p className="text-yellow-500">{'⭐'.repeat(product.rating)}</p>
-                                <div className="flex justify-between items-center mt-2">
-                                    <button onClick={() => toggleLike(product.name)} className="text-red-500">
-                                        <FiHeart className={likedProducts.includes(product.name) ? 'fill-current' : ''} />
-                                    </button>
-                                    <button className="text-gray-700">
-                                        <FiShoppingCart />
-                                    </button>
+                            <div
+                                key={product.name}
+                                className="border rounded-lg p-4 shadow-sm bg-white flex flex-col items-center"
+                                style={{width: '250px', height: '350px'}}
+                            >
+                                <img
+                                    src={product.img}
+                                    alt={product.name}
+                                    className="object-cover w-full h-40 rounded-t-lg"
+                                    style={{objectFit: 'cover'}}
+                                />
+                                <div className="mt-2"> {/* Removed text-center for left alignment */}
+                                    <h4 className="font-semibold text-lg text-left">{product.name}</h4> {/* Added text-left for left alignment */}
+                                    <p className="text-red-500 font-bold text-left">MWK{product.price}/{product.unit}</p> {/* Added text-left */}
+                                    <p className="text-yellow-500 text-left">{'⭐'.repeat(product.rating)}</p> {/* Added text-left */}
+                                    <div className="flex mt-2 space-x-2"> {/* Removed justify-center */}
+                                        <button onClick={() => toggleLike(product.name)} className="text-red-500">
+                                            <FiHeart
+                                                className={likedProducts.includes(product.name) ? 'fill-current' : ''}/>
+                                        </button>
+                                        <button className="text-gray-700">
+                                            <FiShoppingCart/>
+                                        </button>
+                                    </div>
                                 </div>
+
+
                             </div>
                         ))
                     ) : (
@@ -284,5 +298,4 @@ const ProductSearch = () => {
         </div>
     );
 };
-
 export default ProductSearch;
