@@ -1,5 +1,19 @@
 import React, { useState } from 'react';
 import { FiHeart, FiShoppingCart, FiSearch } from 'react-icons/fi';
+import KilomberoImage from '../pictures/kilombero.jpg';
+import irishImage from '../pictures/irish.jpeg';
+import goatImage from  '../pictures/goat.jpeg';
+import tractorImage from  '../pictures/tractor.jpeg';
+import bananaImage from  '../pictures/banana.jpeg';
+import chickenImage from  '../pictures/chicken.jpeg';
+import groundnutImage from  '../pictures/groundnut seed.jpeg';
+import growerImage from  '../pictures/grower.jpeg';
+import milkImage from  '../pictures/milk.jpeg';
+import pesticidesImage from  '../pictures/pestcides.jpeg';
+import ureaImage from  '../pictures/urea.jpeg';
+import shovelImage from  '../pictures/shovel.jpeg';
+
+
 
 // Sample product data
 const products = [
@@ -8,7 +22,7 @@ const products = [
         category: "Crops",
         price: 6000,
         unit: "3kg",
-        img: "https://via.placeholder.com/150",
+        img: irishImage,
         rating: 5,
         tags: ["New"],
     },
@@ -17,7 +31,7 @@ const products = [
         category: "Crops",
         price: 4000,
         unit: "1kg",
-        img: "https://via.placeholder.com/150",
+        img: KilomberoImage,
         rating: 5,
         tags: ["Trending"],
     },
@@ -26,10 +40,94 @@ const products = [
         category: "LiveStock",
         price: 10000,
         unit: "each",
-        img: "https://via.placeholder.com/150",
+        img: goatImage,
         rating: 5,
         tags: ["Label"],
     },
+    {
+        name: "Tractor",
+        category: "Machinery",
+        price: 120000,
+        unit: "each",
+        img: tractorImage,
+        rating: 5,
+        tags: ["new"],
+    },
+    {
+        name: "Pesticides",
+        category: "Agrochemicals",
+        price: 5000,
+        unit: "each",
+        img:pesticidesImage,
+        rating: 5,
+        tags:["Trending"]
+    },
+    {
+      name: "Urea",
+      category: "Fertilizers",
+      price: 60000,
+      unit: "50kg",
+      img: ureaImage,
+      rating: 5,
+      tags: ["Label"]
+    },
+    {
+        name: "Groundnut Seed",
+        category: "Seeds",
+        price: 1000,
+        unit: "each",
+        img: groundnutImage,
+        rating: 5,
+        tags: ["Trending"]
+    },
+    {
+        name: "Milk",
+        category: "Daily",
+        price: 600,
+        unit: "each",
+        img: milkImage,
+        rating: 5,
+        tags: ["New"]
+    },
+    {
+        name: "Chicken Meat",
+        category: "Poultry",
+        price: 10000,
+        unit: "each",
+        img: chickenImage,
+        rating: 5,
+        tags: ["Trending"]
+    },
+    {
+        name: "Banana",
+        category: "Fruits",
+        price: 3000,
+        unit: "each",
+        img: bananaImage,
+        rating: 5,
+        tags: ["Label"]
+    },
+    {
+        name: "Grower Feed",
+        category: "Animal Feed",
+        price: 60000,
+        unit: "50kg",
+        img: growerImage,
+        rating: 5,
+        tags: ["Label"]
+    },
+    {
+        name: "Shovel",
+        category: "Farm Tools",
+        price: 25000,
+        unit: "each",
+        img: shovelImage,
+        rating: 5,
+        tags: ["New"]
+    },
+
+
+
     // Add more products for different categories as needed
 ];
 
@@ -107,7 +205,7 @@ const ProductSearch = () => {
                     <input
                         type="range"
                         min="0"
-                        max="10000"
+                        max="1000000"
                         value={priceRange[1]}
                         onChange={handlePriceChange}
                         className="w-full"
