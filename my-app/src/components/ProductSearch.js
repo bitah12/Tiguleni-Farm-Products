@@ -2,18 +2,16 @@ import React, { useState } from 'react';
 import { FiHeart, FiShoppingCart, FiSearch } from 'react-icons/fi';
 import KilomberoImage from '../pictures/kilombero.jpg';
 import irishImage from '../pictures/irish.jpeg';
-import goatImage from  '../pictures/goat.jpeg';
-import tractorImage from  '../pictures/tractor.jpeg';
-import bananaImage from  '../pictures/banana.jpeg';
-import chickenImage from  '../pictures/chicken.jpeg';
-import groundnutImage from  '../pictures/groundnut seed.jpeg';
-import growerImage from  '../pictures/grower.jpeg';
-import milkImage from  '../pictures/milk.jpeg';
-import pesticidesImage from  '../pictures/pestcides.jpeg';
-import ureaImage from  '../pictures/urea.jpeg';
-import shovelImage from  '../pictures/shovel.jpeg';
-
-
+import goatImage from '../pictures/goat.jpeg';
+import tractorImage from '../pictures/tractor.jpeg';
+import bananaImage from '../pictures/banana.jpeg';
+import chickenImage from '../pictures/chicken.jpeg';
+import groundnutImage from '../pictures/groundnut seed.jpeg';
+import growerImage from '../pictures/grower.jpeg';
+import milkImage from '../pictures/milk.jpeg';
+import pesticidesImage from '../pictures/pestcides.jpeg';
+import ureaImage from '../pictures/urea.jpeg';
+import shovelImage from '../pictures/shovel.jpeg';
 
 // Sample product data
 const products = [
@@ -63,13 +61,13 @@ const products = [
         tags:["Trending"]
     },
     {
-      name: "Urea",
-      category: "Fertilizers",
-      price: 60000,
-      unit: "50kg",
-      img: ureaImage,
-      rating: 5,
-      tags: ["Label"]
+        name: "Urea",
+        category: "Fertilizers",
+        price: 60000,
+        unit: "50kg",
+        img: ureaImage,
+        rating: 5,
+        tags: ["Label"]
     },
     {
         name: "Groundnut Seed",
@@ -131,14 +129,18 @@ const products = [
     // Add more products for different categories as needed
 ];
 
+
 const ProductSearch = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([
-        'Crops', 'Machinery', 'Agrochemicals', 'Fertilizers', 'Seeds', 'Dairy', 'Poultry', 'Fruits', 'Animal Feed', 'Farm Tools','LiveStock'
+        'Crops', 'Machinery', 'Agrochemicals', 'Fertilizers', 'Seeds', 'Dairy', 'Poultry', 'Fruits', 'Animal Feed', 'Farm Tools', 'LiveStock'
     ]);
     const [priceRange, setPriceRange] = useState([0, 10000]);
     const [selectedTags, setSelectedTags] = useState([]);
     const [likedProducts, setLikedProducts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1); // Added for pagination
+
+    const productsPerPage = 6; // Number of products per page
 
     const handleSearch = (e) => setSearchTerm(e.target.value);
 
@@ -166,6 +168,7 @@ const ProductSearch = () => {
         );
     };
 
+    // Filtering products based on selected criteria
     const filteredProducts = products.filter((product) => {
         const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(product.category);
@@ -175,127 +178,145 @@ const ProductSearch = () => {
         return matchesSearch && matchesCategory && matchesPrice && matchesTags;
     });
 
-    return (
-        <div className="flex p-8">
-            {/* Sidebar Filters */}
-            <div className="w-1/4 p-4 bg-gray-100 rounded-lg">
-                <h2 className="font-bold mb-4">Filter By</h2>
+    // Pagination logic
+    const startIndex = (currentPage - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+    const paginatedProducts = filteredProducts.slice(startIndex, endIndex); // Products to display on current page
+    const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
-                {/* Category Filter */}
-                <div className="mb-4">
-                    <h3 className="font-semibold">Categories</h3>
-                    {[
-                        'Crops', 'Machinery', 'Agrochemicals', 'Fertilizers', 'Seeds',
-                        'Dairy', 'Poultry', 'Fruits', 'Animal Feed', 'Farm Tools','LiveStock'
-                    ].map((category) => (
-                        <label className="block" key={category}>
+    return (
+        <div className="flex flex-col p-8">
+            {/* Main Content */}
+            <div className="flex">
+                {/* Sidebar Filters */}
+                <div className="w-1/4 p-4 bg-gray-100 rounded-lg">
+                    <h2 className="font-bold mb-4">Filter By</h2>
+
+                    {/* Category Filter */}
+                    <div className="mb-4">
+                        <h3 className="font-semibold">Categories</h3>
+                        {[
+                            'Crops', 'Machinery', 'Agrochemicals', 'Fertilizers', 'Seeds',
+                            'Dairy', 'Poultry', 'Fruits', 'Animal Feed', 'Farm Tools', 'LiveStock'
+                        ].map((category) => (
+                            <label className="block" key={category}>
+                                <input
+                                    type="checkbox"
+                                    onChange={() => handleCategoryChange(category)}
+                                    checked={selectedCategories.includes(category)}
+                                />{' '}
+                                {category}
+                            </label>
+                        ))}
+                    </div>
+
+                    {/* Price Filter */}
+                    <div className="mb-4">
+                        <h3 className="font-semibold">Price</h3>
+                        <input
+                            type="range"
+                            min="0"
+                            max="1000000"
+                            value={priceRange[1]}
+                            onChange={handlePriceChange}
+                            className="w-full"
+                        />
+                        <p>MWK0 - MWK{priceRange[1]}</p>
+                    </div>
+
+                    {/* Tags Filter */}
+                    <div>
+                        <h3 className="font-semibold">Tags</h3>
+                        <label className="block">
                             <input
                                 type="checkbox"
-                                onChange={() => handleCategoryChange(category)}
-                                checked={selectedCategories.includes(category)}
+                                onChange={() => handleTagChange('New')}
+                                checked={selectedTags.includes('New')}
                             />{' '}
-                            {category}
+                            New
                         </label>
-                    ))}
+                        <label className="block">
+                            <input
+                                type="checkbox"
+                                onChange={() => handleTagChange('Trending')}
+                                checked={selectedTags.includes('Trending')}
+                            />{' '}
+                            Trending
+                        </label>
+                        <label className="block">
+                            <input
+                                type="checkbox"
+                                onChange={() => handleTagChange('Label')}
+                                checked={selectedTags.includes('Label')}
+                            />{' '}
+                            Label
+                        </label>
+                    </div>
                 </div>
 
-                {/* Price Filter */}
-                <div className="mb-4">
-                    <h3 className="font-semibold">Price</h3>
-                    <input
-                        type="range"
-                        min="0"
-                        max="1000000"
-                        value={priceRange[1]}
-                        onChange={handlePriceChange}
-                        className="w-full"
-                    />
-                    <p>MWK0 - MWK{priceRange[1]}</p>
-                </div>
-
-                {/* Tags Filter */}
-                <div>
-                    <h3 className="font-semibold">Tags</h3>
-                    <label className="block">
+                {/* Product List */}
+                <div className="w-3/4 ml-8">
+                    {/* Search Bar */}
+                    <div className="flex items-center mb-4">
+                        <FiSearch className="mr-2" />
                         <input
-                            type="checkbox"
-                            onChange={() => handleTagChange('New')}
-                            checked={selectedTags.includes('New')}
-                        />{' '}
-                        New
-                    </label>
-                    <label className="block">
-                        <input
-                            type="checkbox"
-                            onChange={() => handleTagChange('Trending')}
-                            checked={selectedTags.includes('Trending')}
-                        />{' '}
-                        Trending
-                    </label>
-                    <label className="block">
-                        <input
-                            type="checkbox"
-                            onChange={() => handleTagChange('Label')}
-                            checked={selectedTags.includes('Label')}
-                        />{' '}
-                        Label
-                    </label>
-                </div>
-            </div>
+                            type="text"
+                            placeholder="Looking for what?"
+                            value={searchTerm}
+                            onChange={handleSearch}
+                            className="border border-gray-300 rounded p-2 w-full"
+                        />
+                    </div>
 
-            {/* Product List */}
-            <div className="w-3/4 ml-8">
-                {/* Search Bar */}
-                <div className="flex items-center mb-4">
-                    <FiSearch className="mr-2" />
-                    <input
-                        type="text"
-                        placeholder="Looking for what?"
-                        value={searchTerm}
-                        onChange={handleSearch}
-                        className="border border-gray-300 rounded p-2 w-full"
-                    />
-                </div>
-
-                {/* Product Grid */}
-                <div className="grid grid-cols-3 gap-4">
-                    {filteredProducts.length > 0 ? (
-                        filteredProducts.map((product) => (
-                            <div
-                                key={product.name}
-                                className="border rounded-lg p-4 shadow-sm bg-white flex flex-col items-center"
-                                style={{width: '250px', height: '350px'}}
-                            >
-                                <img
-                                    src={product.img}
-                                    alt={product.name}
-                                    className="object-cover w-full h-40 rounded-t-lg"
-                                    style={{objectFit: 'cover'}}
-                                />
-                                <div className="mt-2"> {/* Removed text-center for left alignment */}
-                                    <h4 className="font-semibold text-lg text-left">{product.name}</h4> {/* Added text-left for left alignment */}
-                                    <p className="text-red-500 font-bold text-left">MWK{product.price}/{product.unit}</p> {/* Added text-left */}
-                                    <p className="text-yellow-500 text-left">{'⭐'.repeat(product.rating)}</p> {/* Added text-left */}
-                                    <div className="flex mt-2 space-x-2"> {/* Removed justify-center */}
-                                        <button onClick={() => toggleLike(product.name)} className="text-red-500">
-                                            <FiHeart
-                                                className={likedProducts.includes(product.name) ? 'fill-current' : ''}/>
-                                        </button>
-                                        <button className="text-gray-700">
-                                            <FiShoppingCart/>
-                                        </button>
+                    {/* Product Grid */}
+                    <div className="grid grid-cols-3 gap-4">
+                        {paginatedProducts.length > 0 ? (
+                            paginatedProducts.map((product) => (
+                                <div
+                                    key={product.name}
+                                    className="border rounded-lg p-4 shadow-sm bg-white flex flex-col items-center"
+                                    style={{ width: '250px', height: '350px' }}
+                                >
+                                    <img
+                                        src={product.img}
+                                        alt={product.name}
+                                        className="object-cover w-full h-40 rounded-t-lg"
+                                        style={{ objectFit: 'cover' }}
+                                    />
+                                    <div className="mt-2">
+                                        <h4 className="font-semibold text-lg text-left">{product.name}</h4>
+                                        <p className="text-red-500 font-bold text-left">MWK{product.price}/{product.unit}</p>
+                                        <p className="text-yellow-500 text-left">{'⭐'.repeat(product.rating)}</p>
+                                        <div className="flex mt-2 space-x-2">
+                                            <button onClick={() => toggleLike(product.name)} className="text-red-500">
+                                                <FiHeart className={likedProducts.includes(product.name) ? 'fill-current' : ''}/>
+                                            </button>
+                                            <button className="text-gray-700">
+                                                <FiShoppingCart/>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
+                            ))
+                        ) : (
+                            <p>No products found matching your criteria.</p>
+                        )}
+                    </div>
 
-
-                            </div>
-                        ))
-                    ) : (
-                        <p>No products found matching your criteria.</p>
-                    )}
+                    {/* Pagination Controls */}
+                    <div className="flex justify-center items-center mt-4">
+                        <button onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} disabled={currentPage === 1}>
+                            ← Previous
+                        </button>
+                        <span className="mx-4">{currentPage} of {totalPages}</span>
+                        <button onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages}>
+                            Next →
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     );
 };
+
 export default ProductSearch;
