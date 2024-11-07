@@ -4,9 +4,9 @@ const LogInPage = ()=> {
     return (
 
         <div className='flex items-center'>
-            <div className = "flex-auto bg-gray-700 grid md:grid-cols-4 gap-7">
+            <div className = "bg-white grid md:grid-cols-4 gap-7 items-center">
                     
-                    <div className='bg-orange-900 p-20 w-96 max-h justify-normal py-56  '>
+                    <div className='bg-orange-500 p-20 w-96 max-h justify-normal py-56  '>
                         <img src="https://img.freepik.com/premium-vector/smartphone-with-purchase-icon-screen-place-red-shopping-cart-with-unfolded-receipt-paper-draped-edge-shopping-cart-online-shopping-conceptvector-3d-isolated-orange-backgroud_425581-1.jpg?w=740" alt="Shopping basket" className="h-auto w-full" />
                     </div>
 
