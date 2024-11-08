@@ -1,4 +1,6 @@
+// src/components/Navbar.js
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FiHeart, FiShoppingCart, FiUser } from 'react-icons/fi';
 
 const Navbar = () => {
@@ -6,17 +8,17 @@ const Navbar = () => {
         <nav className="flex items-center justify-between px-6 py-4 border-b-2 border-black">
             {/* Logo */}
             <div className="text-2xl font-bold text-black">
-                TiGuLeNi
+                <Link to="/">TiGuLeNi</Link>
             </div>
 
             {/* Navigation Links */}
             <div className="flex space-x-6 text-sm font-semibold text-gray-700">
-                <a href="#" className="hover:text-black">Home</a>
-                <a href="#" className="hover:text-black">Contact</a>
-                <a href="#" className="hover:text-black">About</a>
-                <a href="#" className="hover:text-black">Products</a>
-                <a href="#" className="hover:text-black">Services</a>
-                <a href="#" className="hover:text-black">Login</a>
+                <Link to="/" className="hover:text-black">Home</Link>
+                <Link to="/contact" className="hover:text-black">Contact</Link>
+                <Link to="/about" className="hover:text-black">About</Link>
+                <Link to="/products" className="hover:text-black">Products</Link>
+                <Link to="/services" className="hover:text-black">Services</Link>
+                <Link to="/login" className="hover:text-black">Login</Link>
             </div>
 
             {/* Icons */}

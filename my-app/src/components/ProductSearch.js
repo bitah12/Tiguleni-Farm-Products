@@ -45,7 +45,7 @@ const products = [
     {
         name: "Tractor",
         category: "Machinery",
-        price: 120000,
+        price: 1000000,
         unit: "each",
         img: tractorImage,
         rating: 5,
@@ -80,7 +80,7 @@ const products = [
     },
     {
         name: "Milk",
-        category: "Daily",
+        category: "Dairy",
         price: 600,
         unit: "each",
         img: milkImage,
