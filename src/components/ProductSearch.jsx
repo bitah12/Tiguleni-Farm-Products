@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { FiHeart, FiShoppingCart, FiSearch } from 'react-icons/fi';
-import KilomberoImage from '../pictures/kilombero.jpg';
-import irishImage from '../pictures/irish.jpeg';
-import goatImage from '../pictures/goat.jpeg';
-import tractorImage from '../pictures/tractor.jpeg';
-import bananaImage from '../pictures/banana.jpeg';
-import chickenImage from '../pictures/chicken.jpeg';
-import groundnutImage from '../pictures/groundnut seed.jpeg';
-import growerImage from '../pictures/grower.jpeg';
-import milkImage from '../pictures/milk.jpeg';
-import pesticidesImage from '../pictures/pestcides.jpeg';
-import ureaImage from '../pictures/urea.jpeg';
-import shovelImage from '../pictures/shovel.jpeg';
+import KilomberoImage from './pictures/kilombero.jpg';
+import irishImage from './pictures/irish.jpeg';
+import goatImage from './pictures/goat.jpeg';
+import tractorImage from './pictures/tractor.jpeg';
+import bananaImage from './pictures/banana.jpeg';
+import chickenImage from './pictures/chicken.jpeg';
+import groundnutImage from './pictures/groundnut seed.jpeg';
+import growerImage from './pictures/grower.jpeg';
+import milkImage from './pictures/milk.jpeg';
+import pesticidesImage from './pictures/pestcides.jpeg';
+import ureaImage from './pictures/urea.jpeg';
+import shovelImage from './pictures/shovel.jpeg'
 
 // Sample product data
 const products = [
@@ -128,6 +128,7 @@ const products = [
 
     // Add more products for different categories as needed
 ];
+
 const ProductSearch = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([
@@ -234,7 +235,7 @@ const ProductSearch = () => {
                             placeholder="Looking for what?"
                             value={searchTerm}
                             onChange={handleSearch}
-                            className="border border-gray-300 rounded p-2 w-full"
+                            className="border border-gray-300 rounded p-2 w-full focus:outline-none focus:border-black"
                         />
                     </div>
 
@@ -258,7 +259,7 @@ const ProductSearch = () => {
                                             <span key={i} className="text-yellow-500">★</span>
                                         ))}
                                     </div>
-                                    <div className="flex items-center space-x-4 mt-auto">
+                                    <div className="flex gap-4 mt-auto">
                                         <button
                                             onClick={() => toggleLike(product.name)}
                                             className="relative transition-transform duration-200 hover:scale-110"
