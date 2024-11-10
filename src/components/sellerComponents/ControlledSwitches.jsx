@@ -13,6 +13,7 @@ export default function ControlledSwitches() {
       navigate("/");
     }
   };
+  
 
   return (
     <Switch
