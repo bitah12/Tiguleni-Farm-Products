@@ -20,6 +20,14 @@ const Product = () => {
       quantity: quantity,
       image: tempImage || (image ? URL.createObjectURL(image) : null)
     };
+    if (editingIndex !== -1) {
+      const updatedProducts = [...products];
+      updatedProducts[editingIndex] = newProduct;
+      setProducts(updatedProducts);
+      setEditingIndex(-1); 
+    } else {
+      setProducts([...products, newProduct]);
+    }
   }
     
   
