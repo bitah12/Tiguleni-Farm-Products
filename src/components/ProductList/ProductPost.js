@@ -34,6 +34,20 @@ const Product = () => {
     setImage(null);
     setTempImage(null); // Reset temporary image
   };
+  const handleDelete = (index) => {
+    const updatedProducts = [...products];
+    updatedProducts.splice(index, 1);
+    setProducts(updatedProducts);
+  };
+
+  const handleEdit = (index) => {
+    const productToEdit = products[index];
+    setProductName(productToEdit.name);
+    setPrice(productToEdit.price);
+    setQuantity(productToEdit.quantity);
+    setTempImage(productToEdit.image);
+    setEditingIndex(index);
+  };
     
   
   return (
