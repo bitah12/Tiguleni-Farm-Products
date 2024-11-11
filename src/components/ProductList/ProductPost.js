@@ -28,7 +28,12 @@ const Product = () => {
     } else {
       setProducts([...products, newProduct]);
     }
-  }
+    setProductName("");
+    setPrice("");
+    setQuantity("");
+    setImage(null);
+    setTempImage(null); // Reset temporary image
+  };
     
   
   return (
