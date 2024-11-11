@@ -48,6 +48,12 @@ const Product = () => {
     setTempImage(productToEdit.image);
     setEditingIndex(index);
   };
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+    setTempImage(URL.createObjectURL(file)); // Update temporary image when a new image is selected
+  };
+
     
   
   return (
