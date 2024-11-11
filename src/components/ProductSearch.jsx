@@ -128,7 +128,6 @@ const products = [
 
     // Add more products for different categories as needed
 ];
-
 const ProductSearch = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([
@@ -193,6 +192,7 @@ const ProductSearch = () => {
                                     type="checkbox"
                                     onChange={() => handleCategoryChange(category)}
                                     checked={selectedCategories.includes(category)}
+                                    className="form-checkbox h-5 w-5 text-green-500 focus:ring-0"
                                 />{' '}
                                 {category}
                             </label>
@@ -220,6 +220,7 @@ const ProductSearch = () => {
                                     type="checkbox"
                                     onChange={() => handleTagChange(tag)}
                                     checked={selectedTags.includes(tag)}
+                                    className="form-checkbox h-5 w-5 text-green-500 focus:ring-0"
                                 />{' '}
                                 {tag}
                             </label>
@@ -235,7 +236,7 @@ const ProductSearch = () => {
                             placeholder="Looking for what?"
                             value={searchTerm}
                             onChange={handleSearch}
-                            className="border border-gray-300 rounded p-2 w-full focus:outline-none focus:border-black"
+                            className="border border-gray-300 rounded p-2 w-full focus:outline-none focus:border-black focus:ring-0"
                         />
                     </div>
 
