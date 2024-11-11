@@ -4,7 +4,9 @@ const LoginPage = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-white">
 
-        <div className='bg-orange-500 p-8 rounded-l-lg shadow-lg w-full max-w-md'></div>
+        <div className='bg-orange-500 p-8 rounded-l-lg shadow-lg w-full max-w-md'>
+          <img src="" alt="Shopping cart" className="h-72 w-20" />
+        </div>
      
         <div className="bg-white p-8 rounded-r-lg shadow-lg w-full max-w-md">
             <h1 className="text-2xl font-bold mb-4">Log In to Tiguleni</h1>
@@ -34,7 +36,23 @@ const LoginPage = () => {
               placeholder="Enter your password"
               required/>
           </div>
-          
+
+          <div className="flex items-center justify-between">
+            <button
+              type="submit"
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded "
+            >
+              Log In
+            </button>
+            <a href="#" className=" font-bold text-sm text-blue-500 hover:text-blue-800">
+              Forgot password?
+            </a>
+          </div>
+
+          <div className="mt-8 text-center">
+          <p className="text-gray-700">Don't have an account? <a href="#" className="text-blue-500 hover:text-blue-800">Sign Up</a></p>
+        </div>
+
         </form>
         
       </div>
