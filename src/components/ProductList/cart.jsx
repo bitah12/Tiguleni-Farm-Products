@@ -8,7 +8,15 @@ const Cart = () => {
         { id: 3, name: "Honey", price: 7.5, quantity: 1, image: "https://via.placeholder.com/80" }
     ]);
 
-    
+    // Calculate total price of cart items
+    const calculateTotal = () => {
+        return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+    };
+
+    // Remove item from cart
+    const removeFromCart = (id) => {
+        setCart(cart.filter((item) => item.id !== id));
+    };
 
     return (
         cart
