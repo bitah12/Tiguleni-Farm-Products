@@ -4,7 +4,21 @@ import { FaShoppingCart } from "react-icons/fa";
 const ProductsPage = ({ addToCart }) => {
     const [products, setProducts] = useState([]);
 
-    
+    // Fetch products from the database when the component mounts
+    useEffect(() => {
+        fetchProducts();
+    }, []);
+
+    const fetchProducts = async () => {
+        try {
+            // Replace this with  API endpoint
+            const response = await fetch("https://my-api-url.com/products");
+            const data = await response.json();
+            setProducts(data);
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        }
+    };
 
     const handleEnquire = (product) => {
         alert(`Enquiry for: ${product.name}`);
