@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import NavBar from "../HomePage/NavBar";
 import Footer from "../HomePage/Footer";
@@ -6,7 +7,6 @@ const Product = () => {
   const [products, setProducts] = useState([]);
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState("");
-  const [marketplace, setMarketplace] = useState("");
   const [quantity, setQuantity] = useState("");
   const [image, setImage] = useState(null);
   const [editingIndex, setEditingIndex] = useState(-1); 
@@ -32,8 +32,9 @@ const Product = () => {
     setPrice("");
     setQuantity("");
     setImage(null);
-    setTempImage(null); // Reset temporary image
+    setTempImage(null); 
   };
+
   const handleDelete = (index) => {
     const updatedProducts = [...products];
     updatedProducts.splice(index, 1);
@@ -48,19 +49,18 @@ const Product = () => {
     setTempImage(productToEdit.image);
     setEditingIndex(index);
   };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
-    setTempImage(URL.createObjectURL(file)); // Update temporary image when a new image is selected
+    setTempImage(URL.createObjectURL(file));
   };
 
-    
-  
   return (
     <div>
       <NavBar />
       <div className="flex justify-center bg-white">
-        <form onSubmit={handleSubmit} className="mt-8 bg-white w-1/2 h-3/4 p-6 m-8 rounded-lg">
+        <form onSubmit={handleSubmit} className="mt-8 bg-white w-1/2 h-3/4 p-6 m-8 rounded-lg shadow-lg">
           <div className="mb-4">
             <label className="block text-black text-sm font-bold mb-2">
               Product Name
@@ -106,16 +106,16 @@ const Product = () => {
           </div>
           <button
             type="submit"
-            className="bg-white  hover:bg-white   text-black  font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             {editingIndex !== -1 ? "Update Product" : "Add Product"}
           </button>
         </form>
         <div className="mt-8 w-full px-8">
-          <h2 className="text-lg font-bold mb-4">Products</h2>
+          <h2 className="text-lg font-bold mb-4 text-black">Products</h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {products.map((product, index) => (
-              <li key={index} className="border p-4 rounded-lg flex flex-col justify-between">
+              <li key={index} className="border p-4 rounded-lg flex flex-col justify-between bg-white shadow-md">
                 <div>
                   {product.image && (
                     <img
@@ -125,18 +125,20 @@ const Product = () => {
                       onClick={() => handleEdit(index)}
                     />
                   )}
-                  <div className="mb-2">{product.name} - {product.price} - {product.market} - {product.quantity}</div>
+                  <div className="mb-2 text-black">
+                    {product.name} - ${product.price} - {product.quantity}
+                  </div>
                 </div>
                 <div>
                   <button
                     onClick={() => handleEdit(index)}
-                    className="mr-2 text-sm text-white"
+                    className="mr-2 text-sm bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(index)}
-                    className="text-sm text-white"
+                    className="text-sm bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600"
                   >
                     Delete
                   </button>
@@ -146,7 +148,7 @@ const Product = () => {
           </ul>
         </div>
       </div>
-      <Footer></Footer>
+      <Footer />
     </div>
   );
 };
