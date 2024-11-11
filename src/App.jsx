@@ -1,8 +1,9 @@
-import LogInPage from "./components/Login";
+import LoginPage from "./components/Login";
 export default function App() {
   return ( 
     <div>
-      <LogInPage/>
+      
+      <LoginPage/>
     </div>
     
   );
