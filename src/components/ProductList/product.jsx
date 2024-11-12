@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import NavBar from "../HomePage/NavBar";
 import Footer from "../HomePage/Footer";
 
@@ -9,31 +8,29 @@ const Product = () => {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [image, setImage] = useState(null);
-  const [editingIndex, setEditingIndex] = useState(-1); 
-  const [tempImage, setTempImage] = useState(null); 
-      
-  const handleSubmit = (e) => {
+  const [tempImage, setTempImage] = useState(null);
+  const [editingIndex, setEditingIndex] = useState(-1);
+
+  // Submit function to handle form submission and send data to the backend
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newProduct = {
       name: productName,
       price: price,
       quantity: quantity,
-      image: tempImage || (image ? URL.createObjectURL(image) : null)
+      image: tempImage || (image ? URL.createObjectURL(image) : null),
     };
-    if (editingIndex !== -1) {
-      const updatedProducts = [...products];
-      updatedProducts[editingIndex] = newProduct;
-      setProducts(updatedProducts);
-      setEditingIndex(-1); 
-    } else {
-      setProducts([...products, newProduct]);
-    }
-    setProductName("");
-    setPrice("");
-    setQuantity("");
-    setImage(null);
-    setTempImage(null); 
-  };
+
+    try {
+      const response = await fetch("http://my-api-url.com/api/products", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newProduct),
+      });
+
+     
 
   const handleDelete = (index) => {
     const updatedProducts = [...products];
@@ -60,7 +57,7 @@ const Product = () => {
     <div>
       <NavBar />
       <div className="flex justify-center bg-white">
-        <form onSubmit={handleSubmit} className="mt-8 bg-white w-1/2 h-3/4 p-6 m-8 rounded-lg shadow-lg">
+        <form onSubmit={handleSubmit} className="mt-8 bg-white w-1/2 h-3/4 p-6 m-8 rounded-lg">
           <div className="mb-4">
             <label className="block text-black text-sm font-bold mb-2">
               Product Name
@@ -112,10 +109,10 @@ const Product = () => {
           </button>
         </form>
         <div className="mt-8 w-full px-8">
-          <h2 className="text-lg font-bold mb-4 text-black">Products</h2>
+          <h2 className="text-lg font-bold mb-4">Products</h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {products.map((product, index) => (
-              <li key={index} className="border p-4 rounded-lg flex flex-col justify-between bg-white shadow-md">
+              <li key={index} className="border p-4 rounded-lg flex flex-col justify-between">
                 <div>
                   {product.image && (
                     <img
@@ -125,20 +122,18 @@ const Product = () => {
                       onClick={() => handleEdit(index)}
                     />
                   )}
-                  <div className="mb-2 text-black">
-                    {product.name} - ${product.price} - {product.quantity}
-                  </div>
+                  <div className="mb-2">{product.name} - {product.price} - {product.marketplace} - {product.quantity}</div>
                 </div>
                 <div>
                   <button
                     onClick={() => handleEdit(index)}
-                    className="mr-2 text-sm bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600"
+                    className="mr-2 text-sm text-red-500"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(index)}
-                    className="text-sm bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600"
+                    className="text-sm text-red-500"
                   >
                     Delete
                   </button>
@@ -154,5 +149,3 @@ const Product = () => {
 };
 
 export default Product;
-
-
