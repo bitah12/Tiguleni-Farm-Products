@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { FiPhoneCall, FiMail } from "react-icons/fi";
+import Navbar from "./navbar/Navbar";
+import Footer from "./footer/Footer";
 
 const ContactUs = () => {
   const [success, setSuccess] = useState("");
@@ -15,9 +17,10 @@ const ContactUs = () => {
     setSuccess("Message successfully sent");
   };
 
-  return (
-    <div className="max-w-7xl mx-auto p-6">
-      <h1 className="text-2xl font-semibold mb-6">Contact Us</h1>
+  return (<div>
+    <Navbar/>
+    <div className="max-w-7xl h-screen mx-auto p-6">
+      <h1 className="text-2xl mt-10 font-semibold mb-6">/Contact Us</h1>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="space-y-6">
           <div className="flex items-center space-x-4">
@@ -110,6 +113,9 @@ const ContactUs = () => {
         </div>
       </div>
     </div>
+    <Footer/>
+  </div>
+   
   );
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import ProductCard from './ProductCard';
 import products from "./Products";
+import { Link } from 'react-router-dom';
 
 function TrendingProducts() {
   return (
@@ -12,11 +13,11 @@ function TrendingProducts() {
         </div>
       </div>
       <h3 className="text-2xl font-bold mb-6">Recently Added</h3></div>
-      <div className=' ml-[15px]  grid  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-5 md:gap-x-8'>
+     <Link to='/productDetails:productId'> <div className=' ml-[15px]  grid  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-5 md:gap-x-8'>
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
-    </div>
+    </div></Link>
     </div>
   );
 }
