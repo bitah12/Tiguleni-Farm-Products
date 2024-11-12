@@ -33,22 +33,14 @@ export const router = createBrowserRouter([
 
   {
     path: "/SignUp",
-    element: <SignUpPage></SignUpPage>},
-    
-                {path:'/about',
-                    element: <AboutUs/>
-                },{
-                  path:'/products',
-                  element:<ProductSearch/>
-                },
-                {path:'productDetails:productId/message',
-                  element:<Messaging/>
-                },
-                {path:'cart',
-                  element:<Cart/>
-                }
- 
+    element: <SignUpPage></SignUpPage>,
+  },
+
+  { path: "/about", element: <AboutUs /> },
+  {
+    path: "/products",
+    element: <ProductSearch />,
+  },
+  { path: "productDetails:productId/message", element: <Messaging /> },
+  { path: "cart", element: <Cart /> },
 ]);
-
-
-
