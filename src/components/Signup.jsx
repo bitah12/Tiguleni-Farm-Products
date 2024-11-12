@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const SignUpPage = ()=> {
     return (
@@ -15,17 +16,35 @@ const SignUpPage = ()=> {
                     <p className='text-gray-500 mb-6'>Enter your details below</p>
                     <form className='space-y-8'>
                         <div>
-                           <input type='text' placeholder='Name' className='w-full border rounded-md px-7 py-3'></input>
+                           <input 
+                                type='text' 
+                                placeholder='Name' 
+                                className='w-full border rounded-md px-7 py-3'>
+                            </input>
                         </div>
                         <div>
-                            <input type='password' placeholder='Password' className='w-full border rounded-md px-7 py-3'></input>
+                            <input
+                                type='password'
+                                placeholder='Password' 
+                                className='w-full border rounded-md px-7 py-3'>
+                            </input>
                         </div>
                         
-                        <button type='submit' className='hover:bg-red-900 transition-colors w-full bg-red-500 text-white rounded-md py-4 px-4 '>Seller</button>
-                        <button type='submit' className='hover:bg-red-900 transition-colors w-full bg-red-500 text-white rounded-md py-4 px-10 justify-center'>Create account</button>
+                        <button 
+                            type='submit' 
+                            className='hover:bg-red-900 transition-colors w-full bg-red-500 text-white rounded-md py-4 px-4 '>
+                                Seller
+                        </button>
+                        <button
+                            type='submit' 
+                            className='hover:bg-red-900 transition-colors w-full bg-red-500 text-white rounded-md py-4 px-10 justify-center'>
+                                Create account
+                        </button>
                         <div className='text center mt-5'>
                             <span className='text-gray-500'>Already have an account?</span>{''}
+                            <Link to = "/">
                             <a href='#' className='text-blue-800'>Log in</a>
+                            </Link>
                         </div>
                     </form>
                 </div>

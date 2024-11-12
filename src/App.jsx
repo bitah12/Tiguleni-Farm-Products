@@ -1,10 +1,15 @@
 import LoginPage from "./components/Login";
-export default function App() {
+import SignUpPage from "./components/SignUp";
+ const App = ()=> {
   return ( 
     <div>
       
       <LoginPage/>
+      <SignUpPage/>
     </div>
     
   );
 }
+
+
+export default App;
