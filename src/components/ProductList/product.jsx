@@ -30,7 +30,21 @@ const Product = () => {
         body: JSON.stringify(newProduct),
       });
 
-     
+      if (response.ok) {
+        const savedProduct = await response.json();
+        setProducts([...products, savedProduct]);
+        setProductName("");
+        setPrice("");
+        setQuantity("");
+        setImage(null);
+        setTempImage(null);
+      } else {
+        console.error("Failed to save product to database");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const handleDelete = (index) => {
     const updatedProducts = [...products];
