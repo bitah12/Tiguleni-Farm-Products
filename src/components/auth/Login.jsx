@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Navbar from '../navbar/Navbar';
+import Footer from '../footer/Footer';
 
 const LoginPage = () => {
-  return (
+  return (<div>
+    <Navbar/>
     <div className="flex justify-center items-center h-screen bg-white">
 
         <div className='bg-orange-500 p-8 rounded-l-lg shadow-lg w-full max-w-md'>
@@ -67,6 +70,9 @@ const LoginPage = () => {
       <div className="absolute top-0 right-0 mt-4 mr-4">
           </div>
     </div>
+    <Footer/>
+  </div>
+    
   );
 };
 

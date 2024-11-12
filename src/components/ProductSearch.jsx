@@ -12,6 +12,9 @@ import milkImage from './pictures/milk.jpeg';
 import pesticidesImage from './pictures/pestcides.jpeg';
 import ureaImage from './pictures/urea.jpeg';
 import shovelImage from './pictures/shovel.jpeg'
+import Navbar from './navbar/Navbar';
+import Footer from './footer/Footer';
+import { Link } from 'react-router-dom';
 
 // Sample product data
 const products = [
@@ -178,7 +181,8 @@ const ProductSearch = () => {
     const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
     const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
-    return (
+    return (<div>
+        <Navbar/>
         <div className="flex flex-col p-8">
             <div className="flex">
                 <div className="w-1/4 p-4 bg-gray-100 rounded-lg">
@@ -247,11 +251,11 @@ const ProductSearch = () => {
                                     key={product.name}
                                     className="border rounded-lg p-4 shadow-sm bg-white flex flex-col"
                                 >
-                                    <img
+                                 <Link to='/productDetails:productId'>                                    <img
                                         src={product.img}
                                         alt={product.name}
                                         className="w-full h-48 mb-4 rounded-md object-cover"
-                                    />
+                                    /></Link>
                                     <h3 className="text-lg font-semibold">{product.name}</h3>
                                     <p className="text-gray-800 mb-2">MWK{product.price} / {product.unit}</p>
                                     <p className="text-gray-600">{product.category}</p>
@@ -306,6 +310,9 @@ const ProductSearch = () => {
                 </div>
             </div>
         </div>
+        <Footer/>
+    </div>
+       
     );
 };
 

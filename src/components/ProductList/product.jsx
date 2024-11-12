@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import NavBar from "../HomePage/NavBar";
-import Footer from "../HomePage/Footer";
+import ControlledSwitches from "../sellerComponents/ControlledSwitches";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
@@ -69,9 +68,18 @@ const Product = () => {
 
   return (
     <div>
-      <NavBar />
+      <div className="flex justify-between items-center  mb-6">
+        <h2 className="text-4xl font-semibold text-black">Add Products</h2>
+        <div className="flex items-center">
+          <span className="text-sm mr-2 text-black">Switch to buy</span>
+          <ControlledSwitches />
+        </div>
+      </div>
       <div className="flex justify-center bg-white">
-        <form onSubmit={handleSubmit} className="mt-8 bg-white w-1/2 h-3/4 p-6 m-8 rounded-lg">
+        <form
+          onSubmit={handleSubmit}
+          className="mt-8 bg-white w-1/2 h-3/4 p-6 m-8 rounded-lg"
+        >
           <div className="mb-4">
             <label className="block text-black text-sm font-bold mb-2">
               Product Name
@@ -126,7 +134,10 @@ const Product = () => {
           <h2 className="text-lg font-bold mb-4">Products</h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {products.map((product, index) => (
-              <li key={index} className="border p-4 rounded-lg flex flex-col justify-between">
+              <li
+                key={index}
+                className="border p-4 rounded-lg flex flex-col justify-between"
+              >
                 <div>
                   {product.image && (
                     <img
@@ -136,7 +147,10 @@ const Product = () => {
                       onClick={() => handleEdit(index)}
                     />
                   )}
-                  <div className="mb-2">{product.name} - {product.price} - {product.marketplace} - {product.quantity}</div>
+                  <div className="mb-2">
+                    {product.name} - {product.price} - {product.marketplace} -{" "}
+                    {product.quantity}
+                  </div>
                 </div>
                 <div>
                   <button
@@ -157,7 +171,6 @@ const Product = () => {
           </ul>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

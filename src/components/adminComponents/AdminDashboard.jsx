@@ -65,7 +65,7 @@ const AdminDashboard = () => {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-4xl font-semibold">Dashboard</h2>
           <div className="flex items-center">
-            <span className="text-sm mr-2">Switch to buy</span>
+            <span className="text-sm mr-2  opacity-0">Switch to buy</span>
           </div>
         </div>
 

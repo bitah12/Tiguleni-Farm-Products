@@ -5,8 +5,9 @@ import SellerDashboard from "./SellerDashboard";
 import Sales from "./Sales";
 import ManageProducts from "./ManageProducts";
 import SellerPayments from "./SellerPayments";
-import Messaging from "./Messaging";
 import Profile from "./Profile";
+import Product from "../ProductList/product";
+import SellerMessage from "../messaging/SellerMessage";
 
 const SellerLayout = () => {
   return (
@@ -25,9 +26,11 @@ const SellerLayout = () => {
 
           <Route path="payment" element={<SellerPayments />} />
 
-          <Route path="messages" element={<Messaging />} />
+          <Route path="messages" element={<SellerMessage />} />
 
           <Route path="profile" element={<Profile />} />
+
+          <Route path="/manage-products/add-product" element={<Product />} />
         </Routes>
       </div>
     </div>

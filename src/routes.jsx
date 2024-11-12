@@ -7,6 +7,8 @@ import Home from "./components/Home/Home";
 import AboutUs from "./components/aboutus/AboutUs";
 import LoginPage from "./components/auth/Login";
 import SignUpPage from "./components/auth/Signup";
+import ProductSearch from "./components/ProductSearch";
+import Messaging from "./components/messaging/Messaging";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -34,7 +36,13 @@ export const router = createBrowserRouter([
     
                 {path:'/about',
                     element: <AboutUs/>
-                }
+                },{
+                  path:'/products',
+                  element:<ProductSearch/>
+                },
+                {path:'productDetails:productId/message',
+                  element:<Messaging/>
+                },
  
 ]);
 
