@@ -4,38 +4,31 @@ import AdminLayout from "./components/adminComponents/AdminLayout";
 import ProductBuyNowPage from "./components/buyNow/ProductBuyNowPage";
 import ContactUs from "./components/ContactUs";
 import Home from "./components/Home/Home";
-import LoginPage from "./components/Login";
-import SignUpPage from "./components/SignUp";
-
-
+import LoginPage from "./components/auth/Login";
+import SignUpPage from "./components/auth/Signup";
 
 export const router = createBrowserRouter([
-    {path:'/',element:<Home/>},{
-        path: "/seller/*",
-        element: <SellerLayout></SellerLayout>},
-        {
-            path: "/admin/*",
-            element: <AdminLayout></AdminLayout>},
-            {
-                path: "/productDetails:productId",
-                element: <ProductBuyNowPage></ProductBuyNowPage>},
-                {path:'/contactus',
-                    element: <ContactUs/>
-                },
-                {
-      
+  { path: "/", element: <Home /> },
+  {
+    path: "/seller/*",
+    element: <SellerLayout></SellerLayout>,
+  },
+  {
+    path: "/admin/*",
+    element: <AdminLayout></AdminLayout>,
+  },
+  {
+    path: "/productDetails:productId",
+    element: <ProductBuyNowPage></ProductBuyNowPage>,
+  },
+  { path: "/contactus", element: <ContactUs /> },
+  {
+    path: "/login",
+    element: <LoginPage></LoginPage>,
+  },
 
-                    path: "/",
-                    element: <LoginPage></LoginPage>,
-                },
-            
-                {
-                    path:"/SignUp",
-                    element: <SignUpPage></SignUpPage>
-                
-                }
-])
-
-
-
-
+  {
+    path: "/SignUp",
+    element: <SignUpPage></SignUpPage>,
+  },
+]);
