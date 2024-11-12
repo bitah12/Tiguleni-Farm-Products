@@ -11,10 +11,37 @@ const Payments = () => {
     setShowPopup(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Cash out logic
-    console.log("Cash out:", { amount, phoneNumber });
+
+    const requestData = { amount, phoneNumber };
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/withdrawals/cash-out`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          //"Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        alert("Cash out successful!");
+        console.log("Cash out success:", data);
+        
+        setAmount("");
+        setPhoneNumber("");
+      } else {
+        alert("Cash out failed. Please try again.");
+        console.error("Cash out failed:", response.statusText);
+      }
+    } catch (error) {
+      alert("An error occurred while processing the cash out.");
+      console.error("An error occurred:", error);
+    }
+
     setShowPopup(false);
   };
 
