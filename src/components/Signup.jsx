@@ -18,7 +18,7 @@ const SignUpPage = ()=> {
                         <div>
                            <input 
                                 type='text' 
-                                placeholder='Name' 
+                                placeholder='Name or email' 
                                 className='w-full border rounded-md px-7 py-3'>
                             </input>
                         </div>
@@ -33,7 +33,7 @@ const SignUpPage = ()=> {
                                 <option value="seller">Seller</option>
                                 <option value="buyer">Buyer</option>
     
-                            </select>
+                            </select>
                         <button
                             type='submit' 
                             className='hover:bg-red-900 transition-colors w-full bg-red-500 text-white rounded-md py-4 px-10 justify-center'>
