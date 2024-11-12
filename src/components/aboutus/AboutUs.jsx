@@ -1,9 +1,12 @@
 import React from "react";
+import Navbar from "../navbar/Navbar";
+import Footer from "../footer/Footer";
 
 
 
 export default function AboutUs() {
-  return (
+  return (<div>
+    <Navbar/>
     <div className="flex flex-col md:flex-row items-center justify-between  py-20 ">
       <div className="md:w-1/2 mb-8 md:mb-0 ml-[180px] m-0">
         <h2 className="text-5xl font-bold text-black  mb-11">Our Story</h2>
@@ -33,7 +36,11 @@ export default function AboutUs() {
           className="w-[650px] h-[500px] object-cover"
         />
       </div>
+      
     </div>
+    <Footer/>
+  </div>
+    
   
   )
 }
