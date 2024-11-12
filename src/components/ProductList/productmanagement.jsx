@@ -27,7 +27,17 @@ const ManageProducts = () => {
               <th className="pb-2">Date</th>
             </tr>
           </thead>
-          
+          <tbody>
+            <tr className="bg-white border-b">
+              <td className="py-2">1</td>
+              <td className="py-2">Beef</td>
+              <td className="py-2">1000kg</td>
+              <td className="py-2">500kg</td>
+              <td className="py-2">MWK 7000</td>
+              <td className="py-2 text-green-500">Available</td>
+              <td className="py-2">2024/10/18</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
