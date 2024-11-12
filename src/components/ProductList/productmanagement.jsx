@@ -15,7 +15,20 @@ const ManageProducts = () => {
         Add Product
       </button>
       <div className="bg-white p-4 border rounded-lg">
-       
+        <table className="min-w-full table-auto">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="pb-2">#</th>
+              <th className="pb-2">Product</th>
+              <th className="pb-2">Available</th>
+              <th className="pb-2">Sold</th>
+              <th className="pb-2">Price</th>
+              <th className="pb-2">Status</th>
+              <th className="pb-2">Date</th>
+            </tr>
+          </thead>
+          
+        </table>
       </div>
     </div>
   );
