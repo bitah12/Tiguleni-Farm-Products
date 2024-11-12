@@ -9,6 +9,7 @@ import LoginPage from "./components/auth/Login";
 import SignUpPage from "./components/auth/Signup";
 import ProductSearch from "./components/ProductSearch";
 import Messaging from "./components/messaging/Messaging";
+import Cart from "./components/ProductList/cart";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -43,6 +44,9 @@ export const router = createBrowserRouter([
                 {path:'productDetails:productId/message',
                   element:<Messaging/>
                 },
+                {path:'cart',
+                  element:<Cart/>
+                }
  
 ]);
 

@@ -1,7 +1,7 @@
 
-import React, { useState } from "react";
-import NavBar from "../HomePage/NavBar";
-import Footer from "../HomePage/Footer"; 
+import React, { useState } from "react"; 
+import Navbar from "../navbar/Navbar";
+import Footer from "../footer/Footer";
 
 const Cart = () => {
     const [cart, setCart] = useState([]);
@@ -18,8 +18,8 @@ const Cart = () => {
 
     return (
         <div>
-            <NavBar />
-            <div className="container mx-auto p-8">
+            <Navbar />
+            <div className="container h-screen mx-auto p-8">
                 <h2 className="text-2xl font-bold mb-6">Shopping Cart</h2>
                 <div className="space-y-6">
                     {cart.map((item) => (

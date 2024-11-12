@@ -34,11 +34,11 @@ const Navbar = () => {
       <div className="flex items-center space-x-6 text-gray-700">
         <FiHeart className="w-5 h-5 cursor-pointer hover:text-black" />
         <div className="relative">
-          <FiShoppingCart className="w-5 h-5 cursor-pointer hover:text-black" />
+         <Link to='cart'><FiShoppingCart className="w-5 h-5 cursor-pointer hover:text-black" /> 
           {/* Notification Badge */}
           <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
             2
-          </span>
+          </span></Link>
         </div>
         <FiUser className="w-5 h-5 cursor-pointer hover:text-black" />
       </div>
