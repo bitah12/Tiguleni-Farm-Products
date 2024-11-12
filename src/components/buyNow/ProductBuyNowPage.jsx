@@ -51,7 +51,7 @@ const ProductBuyNowPage = () => {
             <div className="flex items-center mb-6">
               <button
                 onClick={handleDecrease}
-                className="bg-white border-l border-t border-b text-black px-3 py-1  border-gray-600 rounded-l "
+                className="bg-white border-l border-t border-b border-r text-black px-3 py-1  border-gray-600 rounded-l "
               >
                 -
               </button>
@@ -59,7 +59,7 @@ const ProductBuyNowPage = () => {
                 type="text"
                 value={quantity}
                 readOnly
-                className="text-center w-12 border-gray-600 border-b  px-2 py-1"
+                className="text-center w-12 border-gray-600 border-b border-t  px-2 py-1"
               />
               <button
                 onClick={handleIncrease}
