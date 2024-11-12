@@ -4,6 +4,7 @@ import AdminLayout from "./components/adminComponents/AdminLayout";
 import ProductBuyNowPage from "./components/buyNow/ProductBuyNowPage";
 import ContactUs from "./components/ContactUs";
 import Home from "./components/Home/Home";
+import AboutUs from "./components/aboutus/AboutUs";
 
 
 export const router = createBrowserRouter([
@@ -16,7 +17,10 @@ export const router = createBrowserRouter([
             {
                 path: "/productDetails:productId",
                 element: <ProductBuyNowPage></ProductBuyNowPage>},
-                {path:'/contactus',
+                {path:'/contact',
                     element: <ContactUs/>
+                },
+                {path:'/about',
+                    element: <AboutUs/>
                 }
 ])
