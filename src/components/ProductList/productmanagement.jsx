@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; 
 import ControlledSwitches from "./ControlledSwitches";
 
 const ManageProducts = () => {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate(); 
 
   // Fetch products from the API
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("/api/products");
+        const response = await axios.get("/api/products"); 
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -30,10 +32,7 @@ const ManageProducts = () => {
 
       <button
         className="mb-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-        onClick={() => {
-          // Navigate to the add product page
-          window.location.href = "/add-product"; // Adjust to your route if different
-        }}
+        onClick={() => navigate("/add-product")} // Navigate to the add product form
       >
         Add Product
       </button>
@@ -73,3 +72,4 @@ const ManageProducts = () => {
 };
 
 export default ManageProducts;
+
