@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Line, Pie } from "react-chartjs-2";
-
 
 import {
   Chart as ChartJS,
@@ -13,31 +12,48 @@ import {
   Legend,
 } from "chart.js";
 
-
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  ArcElement,
+  Tooltip,
+  Legend
+);
 
 const AdminDashboard = () => {
-  const lineChartData = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
-    datasets: [
-      {
-        label: "Sales",
-        data: [5000, 10000, 7000, 15000, 13000, 17000, 9000, 22000, 18000, 25000],
-        borderColor: "rgba(54, 162, 235, 1)",
-        backgroundColor: "rgba(54, 162, 235, 0.2)",
-        borderWidth: 2,
-        tension: 0.4,
-        fill: true,
-      },
-    ],
+  
+  const [lineChartData, setLineChartData] = useState({
+    labels: [],
+    datasets: [],
+  });
+
+  const fetchMonthlySalesData = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/sales/allsalesAdmin`);
+      const data = await response.json();
+      setLineChartData(data);
+    } catch (error) {
+      console.error("Error fetching sales data:", error);
+    }
   };
+
+  useEffect(() => {
+    fetchMonthlySalesData();
+  }, []);
 
   const pieChartData = {
     labels: ["Beef", "Goat", "Chicken", "Pork"],
     datasets: [
       {
         data: [40, 30, 20, 10],
-        backgroundColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)", "rgba(75, 192, 192, 1)", "rgba(255, 205, 86, 1)"],
+        backgroundColor: [
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 99, 132, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(255, 205, 86, 1)",
+        ],
         hoverOffset: 4,
       },
     ],
@@ -45,7 +61,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="flex min-h-screen bg-white">
-      
       <div className="flex-1 p-6 bg-white">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-4xl font-semibold">Dashboard</h2>
@@ -69,7 +84,6 @@ const AdminDashboard = () => {
             <p className="text-3xl font-bold">MWK 5,000,000</p>
             <p className="text-xs">20 Times</p>
           </div>
-          
         </div>
 
         <div className="grid grid-cols-2 gap-6 mb-6">
