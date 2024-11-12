@@ -45,7 +45,7 @@ const SignUpPage = ()=> {
                         </button>
                         <div className='text center mt-5'>
                             <span className='text-gray-500'>Already have an account?</span>{''}
-                            <Link to = "/">
+                            <Link to = "/login">
                             <a href='#' className='text-blue-800'>Log in</a>
                             </Link>
                         </div>
