@@ -1,0 +1,94 @@
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  text-align: center;
+  background-color: whitesmoke;
+}
+
+.container{
+  background-color: whitesmoke;
+}
+
+.content {
+  width: 80%; 
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.button-group .btn-link {
+  align-self: center;
+  text-decoration: none;
+  color: white;
+}
+
+
+.star-rating {
+  display: flex;
+}
+
+.star {
+  color: #d3d3d3;
+  font-size: 24px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.star.filled {
+  color: #ffc107;
+}
+
+h1{
+  text-align: center;
+  color: blue;
+}
+
+h3{
+  text-align: center;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+
+}
+
+.button-group .btn-link {
+  align-self: center;
+  text-decoration: none;
+  color: red;
+}
+
+.feedback-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.feedback-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-container { 
+  display: flex; 
+  justify-content: center;
+  margin-top: 10px; 
+}
