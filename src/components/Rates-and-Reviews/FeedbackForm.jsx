@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import StarRating from './StarRating';
 import { Link } from 'react-router-dom';
+import './RatingAndReviews.css';
 
 const FeedbackForm = ({ onSubmit }) => {
   const [rating, setRating] = useState(0);

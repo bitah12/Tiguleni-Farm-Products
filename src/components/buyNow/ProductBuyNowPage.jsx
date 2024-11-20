@@ -85,6 +85,9 @@ const ProductBuyNowPage = () => {
                <Link to='message'> <button className="ml-1 text-red-500">Message</button> </Link>
               </button>
             </div>
+            <button className="flex text-gray-500 hover:text-gray-700 focus:outline-none">
+               <Link to='FeedbackForm'> <button className="ml-1 text-blue-500">Rate the product</button> </Link>
+            </button>
           </div>
         </div>
       </div>
