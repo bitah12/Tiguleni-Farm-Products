@@ -1,47 +1,35 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
+import axios from "axios";
 
 const AdminPayments = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [paymentsData, setPaymentsData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const paymentsData = [
-    {
-      id: 1,
-      amount: 90000,
-      fee: "4%",
-      status: "success",
-      number: "994543849",
-      transID: "vigothrgrpjtg9f",
-      date: "2024/10/18",
-    },
-    {
-      id: 2,
-      amount: 489363,
-      fee: "4%",
-      status: "success",
-      number: "994543849",
-      transID: "vigothrgrpjtg9f",
-      date: "2024/10/18",
-    },
-    {
-      id: 3,
-      amount: 750000,
-      fee: "4%",
-      status: "success",
-      number: "994543849",
-      transID: "vigothrgrpjtg9f",
-      date: "2024/10/18",
-    },
-    {
-      id: 4,
-      amount: 30000,
-      fee: "4%",
-      status: "success",
-      number: "994543849",
-      transID: "vigothrgrpjtg9f",
-      date: "2024/10/18",
-    },
-  ];
+  const accessToken = localStorage.getItem("token");
 
+  useEffect(() => {
+    const fetchPayments = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/payments`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        setPaymentsData(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch payments data.");
+        setLoading(false);
+      }
+    };
+
+    fetchPayments();
+  }, [accessToken]);
+
+  
+  
   const filteredPayments = paymentsData.filter((payment) => {
     return (
       payment.transID.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -50,8 +38,17 @@ const AdminPayments = () => {
     );
   });
 
+  if (loading) {
+    return <div className="p-6">Loading...</div>;
+  }
+
+  // if (error) {
+  //   return <div className="p-6 text-red-500">{error}</div>;
+  // }
+
+
   return (
-    <div className="p-6 w-full">
+    <div className="p-6 w-[75%] relative -right-[300px]">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-4xl font-semibold">Payments</h2>
         <div className="flex items-center"></div>

@@ -11,19 +11,29 @@ import ProductSearch from "./components/ProductSearch";
 import Messaging from "./components/messaging/Messaging";
 import Cart from "./components/ProductList/cart";
 import FeedbackForm from "./components/Rates-and-Reviews/FeedbackForm";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Home /> },
+  { path: "/home", element: <Home /> },
   {
     path: "/seller/*",
-    element: <SellerLayout></SellerLayout>,
+    element: (
+      <ProtectedRoute role="seller">
+        <SellerLayout></SellerLayout>
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/*",
-    element: <AdminLayout></AdminLayout>,
+    element: (
+      <ProtectedRoute role="admin">
+        <AdminLayout></AdminLayout>
+      </ProtectedRoute>
+    ),
   },
   {
-    path: "/productDetails:productId",
+    path: "/productDetails/:productId",
     element: <ProductBuyNowPage></ProductBuyNowPage>,
   },
   { path: "/contact", element: <ContactUs /> },
@@ -33,27 +43,30 @@ export const router = createBrowserRouter([
   },
 
   {
-    path: "/SignUp",
-    element: <SignUpPage></SignUpPage>},
-    
-                {path:'/about',
-                    element: <AboutUs/>
-                },{
-                  path:'/products',
-                  element:<ProductSearch/>
-                },
-                {path:'productDetails:productId/message',
-                  element:<Messaging/>
-                },
-                {path:'cart',
-                  element:<Cart/>
-                },
-                {
-                  path: 'productDetails:productId/FeedbackForm',
-                  element: <FeedbackForm/>
-                }
- 
+    path: "/signup",
+    element: <SignUpPage></SignUpPage>,
+  },
+
+  { path: "/about", element: <AboutUs /> },
+  {
+    path: "/products",
+    element: <ProductSearch />,
+  },
+  {
+    path: "productDetails/:productId/message",
+    element: (
+      <ProtectedRoute>
+        <Messaging />{" "}
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/messages",
+    element: (
+      <ProtectedRoute>
+        <Messaging />{" "}
+      </ProtectedRoute>
+    ),
+  },
+  { path: "cart", element: <Cart /> },
 ]);
-
-
-

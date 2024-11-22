@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { FiHeart, FiShoppingCart } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product, toggleLike, isLiked }) => {
     return (
         <div className="border h-full w-full rounded-lg p-4 shadow-sm bg-white flex flex-col">
-            <img
+           <Link to={`/productDetails/:${product.id}`}>  <img
                 src={product.image}
                 alt={product.name}
                 className="w-full h-48 mb-4 rounded-md object-cover"
             />
             <h3 className="text-lg font-semibold">{product.name}</h3>
             <p className="text-gray-800 mb-2">MWK{product.price} / {product.unit}</p>
-            <p className="text-gray-600">{product.category}</p>
+            <p className="text-gray-600">{product.category}</p> </Link>
             <div className="flex items-center mb-2">
                 {Array.from({ length: product.rating }, (_, i) => (
                     <span key={i} className="text-yellow-500">★</span>

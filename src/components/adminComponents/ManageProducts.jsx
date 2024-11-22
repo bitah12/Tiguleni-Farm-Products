@@ -2,7 +2,7 @@ import React from "react";
 
 const ManageProducts = () => {
   return (
-    <div className="p-6">
+    <div className="p-6 w-[75%] relative -right-[300px]">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-4xl font-semibold">Manage Products</h2>
         <div className="flex items-center"></div>
