@@ -1,9 +1,24 @@
-// src/components/Navbar.jsx
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FiHeart, FiShoppingCart, FiUser } from "react-icons/fi";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "/src/store/authSlice";
 
 const Navbar = () => {
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
+
+  const toggleDropdown = () => {
+    setDropdownOpen((prev) => !prev);
+  };
+
   return (
     <nav className="flex items-center justify-between px-6 py-4 border-b-2 border-black">
       {/* Logo */}
@@ -25,22 +40,57 @@ const Navbar = () => {
         <Link to="/products" className="hover:text-black">
           Products
         </Link>
-        <Link to="/login" className="hover:text-black">
-          Login
-        </Link>
+        {!user ? (
+          <Link to="/login" className="hover:text-black">
+            Login
+          </Link>
+        ) : null}
       </div>
 
       {/* Icons */}
-      <div className="flex items-center space-x-6 text-gray-700">
+      <div className="flex items-center space-x-6 text-gray-700 relative">
         <FiHeart className="w-5 h-5 cursor-pointer hover:text-black" />
         <div className="relative">
-         <Link to='cart'><FiShoppingCart className="w-5 h-5 cursor-pointer hover:text-black" /> 
-          {/* Notification Badge */}
-          <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
-            2
-          </span></Link>
+          <Link to="cart">
+            <FiShoppingCart className="w-5 h-5 cursor-pointer hover:text-black" />
+            {/* Notification Badge */}
+            <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
+              2
+            </span>
+          </Link>
         </div>
-        <FiUser className="w-5 h-5 cursor-pointer hover:text-black" />
+        {user ? (
+          <div className="relative">
+            <FiUser
+              className="w-5 h-5 cursor-pointer hover:text-black"
+              onClick={toggleDropdown}
+            />
+            {dropdownOpen && (
+              <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md text-sm">
+                <button
+                  onClick={() => navigate("/profile")}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                >
+                  Profile
+                </button>
+                <button
+                  onClick={() => navigate("/messages")}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                >
+                  Messages
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <p className="w-5 h-5 opacity-0">---</p>
+        )}
       </div>
     </nav>
   );
