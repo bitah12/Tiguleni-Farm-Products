@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink,useNavigate } from "react-router-dom";
 import dashboardIcon from "/src/assets/dashboardIcon.png";
 import salesIcon from "/src/assets/Sales.png";
 import manageProductsIcon from "/src/assets/ManageProducts.png";
@@ -8,8 +8,20 @@ import paymentIcon from "/src/assets/Payment.png";
 import profileIcon from "/src/assets/Profile.png";
 import helpIcon from "/src/assets/Help.png";
 import sellerIcon from "/src/assets/Seller.png";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "/src/store/authSlice";
 
 const Sidebar = () => {
+
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    //navigate("/");
+  };
+
   const activeStyle = "text-gray-300  h-8 rounded-md bg-gray-800"; 
 
   return (
@@ -91,6 +103,16 @@ const Sidebar = () => {
           <img src={helpIcon} alt="help" />
           <span className="ml-3">Help</span>
         </NavLink>
+       {user && <NavLink
+       onClick={handleLogout}
+          to="/login"
+          className={({ isActive }) =>
+            `mb-4 flex items-center ${isActive ? activeStyle : ""}`
+          }
+        >
+          <img src={helpIcon} alt="help" />
+          <span className="ml-3">Logout</span>
+        </NavLink>}
 
         <div className="absolute bottom-0 left-0 p-4 flex items-center w-full">
           <img
