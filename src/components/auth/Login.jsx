@@ -1,24 +1,54 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
-import LoginIMage from "/src/assets/loginImage.png";
+import LoginImage from "/src/assets/loginImage.png";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "/src/store/authSlice.jsx";
+
 const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {  isLoading } = useSelector((state) => state.auth);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+  
+    try {
+      const result = await dispatch(loginUser({ email, password }));
+  
+      if (result.type === "auth/loginUser/fulfilled") {
+        const { role } = result.payload.user; // Access the role from user object
+        navigate(role === "admin" ? "/admin" : role === "seller" ? "/seller" : "/");
+      } else {
+        setError("Invalid login credentials. Please try again.");
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again later.");
+    }
+  };
+  
+  
+
   return (
-    <div>
+    <div className="">
       <Navbar />
-      <div className="flex justify-center items-center h-screen bg-white">
-        <div className=" h-96  rounded-l-lg shadow-lg w-96 max-w-md">
+      <div className="flex justify-center h-screen items-center  bg-white">
+        <div className="h-96 rounded-l-lg shadow-lg w-96 max-w-md">
           <img
-            src={LoginIMage}
+            src={LoginImage}
             alt="Shopping cart"
-            className="h-full w-full  rounded-sm shadow-lg"
+            className="h-full w-full rounded-sm shadow-lg"
           />
         </div>
 
         <div className="bg-white p-8 rounded-r-lg shadow-lg w-full max-w-md">
           <h1 className="text-2xl font-bold mb-4">Log In to Tiguleni</h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-5">
               <label
                 htmlFor="email"
@@ -30,6 +60,8 @@ const LoginPage = () => {
                 type="text"
                 id="email"
                 name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="rounded w-full py-3 px-4 text-gray-700"
                 placeholder="Enter your email or phone number"
                 required
@@ -46,22 +78,27 @@ const LoginPage = () => {
                 type="password"
                 id="password"
                 name="password"
-                className=" border rounded w-full py-3 px-4 text-gray-700 "
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="border rounded w-full py-3 px-4 text-gray-700"
                 placeholder="Enter your password"
                 required
               />
             </div>
 
+            {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
+
             <div className="flex items-center justify-between">
               <button
                 type="submit"
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded "
+                disabled={isLoading}
+                className={`bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
               >
-                Log In
+                {isLoading ? "Logging in..." : "Log In"}
               </button>
               <a
                 href="#"
-                className=" font-bold text-sm text-blue-500 hover:text-blue-800"
+                className="font-bold text-sm text-blue-500 hover:text-blue-800"
               >
                 Forgot password?
               </a>
@@ -69,11 +106,9 @@ const LoginPage = () => {
 
             <div className="mt-8 text-center">
               <p className="text-gray-700">
-                Don't have an account?
-                <Link to="/SignUp">
-                  <a href="#" className="text-blue-500 hover:text-blue-800">
-                    Sign Up
-                  </a>
+                Don't have an account?{" "}
+                <Link to="/signup" className="text-blue-500 hover:text-blue-800">
+                  Sign Up
                 </Link>
               </p>
             </div>
