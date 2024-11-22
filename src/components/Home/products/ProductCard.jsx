@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const ProductCard = ({ product, toggleLike, isLiked }) => {
     return (
         <div className="border h-full w-full rounded-lg p-4 shadow-sm bg-white flex flex-col">
-           <Link to='/productDetails:productId'>  <img
+           <Link to={`/productDetails/:${product.id}`}>  <img
                 src={product.image}
                 alt={product.name}
                 className="w-full h-48 mb-4 rounded-md object-cover"
