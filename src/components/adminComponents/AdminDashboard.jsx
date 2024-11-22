@@ -31,7 +31,14 @@ const AdminDashboard = () => {
 
   const fetchMonthlySalesData = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/sales/allsalesAdmin`);
+      const accessToken = localStorage.getItem("token");
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/sales/allsalesAdmin`,{
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`, 
+        },
+      });
       const data = await response.json();
       setLineChartData(data);
     } catch (error) {
@@ -60,7 +67,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-white">
+    <div className="flex w-[75%] relative -right-[300px] min-h-screen bg-white">
       <div className="flex-1 p-6 bg-white">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-4xl font-semibold">Dashboard</h2>
