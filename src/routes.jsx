@@ -10,19 +10,29 @@ import SignUpPage from "./components/auth/Signup";
 import ProductSearch from "./components/ProductSearch";
 import Messaging from "./components/messaging/Messaging";
 import Cart from "./components/ProductList/cart";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Home /> },
+  { path: "/home", element: <Home /> },
   {
     path: "/seller/*",
-    element: <SellerLayout></SellerLayout>,
+    element: (
+      <ProtectedRoute role="seller">
+        <SellerLayout></SellerLayout>
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/*",
-    element: <AdminLayout></AdminLayout>,
+    element: (
+      <ProtectedRoute role="admin">
+        <AdminLayout></AdminLayout>
+      </ProtectedRoute>
+    ),
   },
   {
-    path: "/productDetails:productId",
+    path: "/productDetails/:productId",
     element: <ProductBuyNowPage></ProductBuyNowPage>,
   },
   { path: "/contact", element: <ContactUs /> },
@@ -32,7 +42,7 @@ export const router = createBrowserRouter([
   },
 
   {
-    path: "/SignUp",
+    path: "/signup",
     element: <SignUpPage></SignUpPage>,
   },
 
@@ -41,6 +51,21 @@ export const router = createBrowserRouter([
     path: "/products",
     element: <ProductSearch />,
   },
-  { path: "productDetails:productId/message", element: <Messaging /> },
+  {
+    path: "productDetails/:productId/message",
+    element: (
+      <ProtectedRoute>
+        <Messaging />{" "}
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/messages",
+    element: (
+      <ProtectedRoute>
+        <Messaging />{" "}
+      </ProtectedRoute>
+    ),
+  },
   { path: "cart", element: <Cart /> },
 ]);
