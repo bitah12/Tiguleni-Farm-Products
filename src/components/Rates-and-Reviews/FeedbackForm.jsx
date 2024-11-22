@@ -48,9 +48,6 @@ const FeedbackForm = ({ onSubmit }) => {
             <Button variant="primary" type="submit" className="justify-content-center">
               Send
             </Button>
-            <Link to="/reviews" className="btn btn-link">
-              See Reviews...
-            </Link>
           </div>
         </Form>
       </div>

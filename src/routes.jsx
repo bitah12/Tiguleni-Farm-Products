@@ -10,8 +10,8 @@ import SignUpPage from "./components/auth/Signup";
 import ProductSearch from "./components/ProductSearch";
 import Messaging from "./components/messaging/Messaging";
 import Cart from "./components/ProductList/cart";
-import FeedbackForm from "./components/Rates-and-Reviews/FeedbackForm";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import FeedbackForm from './components/Rates-and-Reviews/FeedbackForm';
 
 export const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -69,4 +69,9 @@ export const router = createBrowserRouter([
     ),
   },
   { path: "cart", element: <Cart /> },
+  
+  {
+    path: 'productDetails/:productId/FeedbackForm',
+    element: <FeedbackForm/>,
+  },
 ]);
