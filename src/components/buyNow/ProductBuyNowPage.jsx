@@ -82,7 +82,7 @@ const ProductBuyNowPage = () => {
           </div>
 
           <div className=" ml-24 mt-8">
-            <h1 className="text-2xl font-bold mb-2">{"Product" || product.name}</h1>
+           <div className=" relative -left-36"> <h1 className="text-2xl  text-black font-bold mb-2">{"Product" || product.name}</h1> </div>
             <div className="flex items-center mb-4">
               <span className="text-yellow-500 text-lg mr-2">★★★★☆</span>
               <span className="text-gray-500">( Reviews)</span>
