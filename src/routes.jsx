@@ -12,6 +12,7 @@ import Messaging from "./components/messaging/Messaging";
 import Cart from "./components/ProductList/cart";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import FeedbackForm from './components/Rates-and-Reviews/FeedbackForm';
+import SellerProfile from "./components/Rates-and-Reviews/SellerProfile";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -74,4 +75,13 @@ export const router = createBrowserRouter([
     path: 'productDetails/:productId/FeedbackForm',
     element: <FeedbackForm/>,
   },
+
+  {
+    path: '/productDetails/:3',
+    element: <SellerProfile></SellerProfile>,
+  },
+  {
+    path: '/productDetails/:productId',
+    element: <ProductBuyNowPage/>
+  }
 ]);

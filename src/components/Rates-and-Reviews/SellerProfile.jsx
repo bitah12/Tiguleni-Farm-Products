@@ -3,7 +3,7 @@ import { Card, Row, Col, Button } from 'react-bootstrap';
 import StarRating from './StarRating';
 import './RatingAndReviews.css';
 
-const SellerProfile = ({ feedbacks }) => {
+const SellerProfile = ({ feedbacks = [] }) => { 
   const [visibleFeedbacks, setVisibleFeedbacks] = useState(3);
   const [showAllFeedbacks, setShowAllFeedbacks] = useState(false);
 
