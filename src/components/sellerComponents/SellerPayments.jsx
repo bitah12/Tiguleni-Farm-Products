@@ -6,7 +6,7 @@ const Payments = () => {
   const [amount, setAmount] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-
+  const accessToken = localStorage.getItem("token");
   const handleCashOut = () => {
     setShowPopup(true);
   };
@@ -21,7 +21,7 @@ const Payments = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          //"Authorization": `Bearer ${token}`
+          "Authorization": `Bearer ${accessToken}`
         },
         body: JSON.stringify(requestData),
       });

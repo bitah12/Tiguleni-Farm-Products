@@ -251,7 +251,7 @@ const ProductSearch = () => {
                                     key={product.name}
                                     className="border rounded-lg p-4 shadow-sm bg-white flex flex-col"
                                 >
-                                 <Link to='/productDetails:productId'>                                    <img
+                                 <Link to='/productDetails/:productId'>                                    <img
                                         src={product.img}
                                         alt={product.name}
                                         className="w-full h-48 mb-4 rounded-md object-cover"

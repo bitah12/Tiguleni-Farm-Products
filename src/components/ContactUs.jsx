@@ -8,13 +8,16 @@ const ContactUs = () => {
   const handleChange = (e) => {};
 
   const handleSubmit = (e) => {
+    e.preventDefault()
     const formEle = document.querySelector("form");
     const formdata = new FormData(formEle);
-    fetch(import.meta.env.ITE_CONTACTUS_EXCELL_SHEET, {
+    fetch(import.meta.env.VITE_CONTACTUS_EXCELL_SHEET, {
       method: "POST",
       body: formdata,
     });
     setSuccess("Message successfully sent");
+    formEle.reset();
+   
   };
 
   return (<div>

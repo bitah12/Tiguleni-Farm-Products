@@ -1,8 +1,43 @@
-import React from "react";
+import React,{ useEffect, useState } from "react";
+import axios from "axios";
 
 const Sales = () => {
+
+  const [salesData, setSalesData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const accessToken = localStorage.getItem("token");
+
+  useEffect(() => {
+    const fetchSalesData = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/sales`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        setSalesData(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch sales data.");
+        setLoading(false);
+      }
+    };
+
+    fetchSalesData();
+  }, [accessToken]);
+
+  if (loading) {
+    return <div className="p-6">Loading...</div>;
+  }
+
+  // if (error) {
+  //   return <div className="p-6 text-red-500">{error}</div>;
+  // }
+
+
   return (
-    <div className="p-6">
+    <div className="p-6 w-[75%] relative -right-[300px]">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-4xl font-semibold">Sales</h2>
         <div className="flex items-center">
