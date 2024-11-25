@@ -8,25 +8,25 @@ const Product = () => {
   const [quantity, setQuantity] = useState("");
   const [image, setImage] = useState(null);
   const [tempImage, setTempImage] = useState(null);
-  const [editingIndex, setEditingIndex] = useState(-1);
+  const [location, setLocation] = useState(""); 
 
-  // Submit function to handle form submission and send data to the backend
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newProduct = {
-      name: productName,
-      price: price,
-      quantity: quantity,
-      image: tempImage || (image ? URL.createObjectURL(image) : null),
-    };
+
+
+    const formData = new FormData();
+    formData.append("products_name", productName);
+    formData.append("price", price);
+    formData.append("location", location);
+    formData.append("quantity_amount", quantity);
+    formData.append("quantity_metric", "kg");
+    formData.append("image", image);
 
     try {
-      const response = await fetch("http://my-api-url.com/api/products", {
+      const response = await fetch("http://localhost:3000/products", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newProduct),
+        body: formData,
       });
 
       if (response.ok) {
@@ -35,29 +35,16 @@ const Product = () => {
         setProductName("");
         setPrice("");
         setQuantity("");
+        setLocation("");
         setImage(null);
         setTempImage(null);
+        alert("Product successfully added!");
       } else {
         console.error("Failed to save product to database");
       }
     } catch (error) {
       console.error("Error:", error);
     }
-  };
-
-  const handleDelete = (index) => {
-    const updatedProducts = [...products];
-    updatedProducts.splice(index, 1);
-    setProducts(updatedProducts);
-  };
-
-  const handleEdit = (index) => {
-    const productToEdit = products[index];
-    setProductName(productToEdit.name);
-    setPrice(productToEdit.price);
-    setQuantity(productToEdit.quantity);
-    setTempImage(productToEdit.image);
-    setEditingIndex(index);
   };
 
   const handleImageChange = (e) => {
@@ -68,7 +55,7 @@ const Product = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center  mb-6">
+      <div className="flex justify-between items-center mb-6">
         <h2 className="text-4xl font-semibold text-black">Add Products</h2>
         <div className="flex items-center">
           <span className="text-sm mr-2 text-black">Switch to buy</span>
@@ -79,6 +66,7 @@ const Product = () => {
         <form
           onSubmit={handleSubmit}
           className="mt-8 bg-white w-1/2 h-3/4 p-6 m-8 rounded-lg"
+          encType="multipart/form-data"
         >
           <div className="mb-4">
             <label className="block text-black text-sm font-bold mb-2">
@@ -89,6 +77,7 @@ const Product = () => {
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+              required
             />
           </div>
           <div className="mb-4">
@@ -96,10 +85,11 @@ const Product = () => {
               Price
             </label>
             <input
-              type="text"
+              type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+              required
             />
           </div>
           <div className="mb-4">
@@ -107,10 +97,23 @@ const Product = () => {
               Quantity
             </label>
             <input
-              type="text"
+              type="number"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-black text-sm font-bold mb-2">
+              Location
+            </label>
+            <input
+              type="text"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+              required
             />
           </div>
           <div className="mb-4">
@@ -121,55 +124,48 @@ const Product = () => {
               type="file"
               onChange={handleImageChange}
               className="shadow appearance-none border w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+              accept="image/*"
+              required
             />
+            {tempImage && (
+              <img
+                src={tempImage}
+                alt="Preview"
+                className="mt-4 w-32 h-32 object-cover rounded"
+              />
+            )}
           </div>
           <button
             type="submit"
             className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            {editingIndex !== -1 ? "Update Product" : "Add Product"}
+            Add Product
           </button>
         </form>
-        <div className="mt-8 w-full px-8">
-          <h2 className="text-lg font-bold mb-4">Products</h2>
-          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {products.map((product, index) => (
-              <li
-                key={index}
-                className="border p-4 rounded-lg flex flex-col justify-between"
-              >
-                <div>
-                  {product.image && (
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-32 object-cover mb-2"
-                      onClick={() => handleEdit(index)}
-                    />
-                  )}
-                  <div className="mb-2">
-                    {product.name} - {product.price} - {product.marketplace} -{" "}
-                    {product.quantity}
-                  </div>
+      </div>
+      <div className="mt-8 w-full px-8">
+        <h2 className="text-lg font-bold mb-4">Products</h2>
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {products.map((product, index) => (
+            <li
+              key={index}
+              className="border p-4 rounded-lg flex flex-col justify-between"
+            >
+              <div>
+                {product.imageUrl && (
+                  <img
+                    src={product.imageUrl}
+                    alt={product.products_name}
+                    className="w-full h-32 object-cover mb-2"
+                  />
+                )}
+                <div className="mb-2">
+                  {product.products_name} - ${product.price} - {product.quantity_amount}
                 </div>
-                <div>
-                  <button
-                    onClick={() => handleEdit(index)}
-                    className="mr-2 text-sm text-red-500"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(index)}
-                    className="text-sm text-red-500"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
