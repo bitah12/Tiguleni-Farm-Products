@@ -7,7 +7,7 @@ const FeedbackFormPage = ({ addFeedback }) => {
 
   const handleFeedbackSubmit = (feedback) => {
     addFeedback(feedback);
-    navigate('/ProductBuyNowPage');
+    navigate('ProductBuyNowPage');
   };
 
   return (

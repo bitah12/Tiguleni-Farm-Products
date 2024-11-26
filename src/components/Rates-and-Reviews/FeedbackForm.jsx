@@ -20,12 +20,38 @@ const FeedbackForm = ({ onSubmit }) => {
     setReview('');
   };
 
+  const handleFeedbackSubmit = (feedback) => {
+    const navigate = useNavigate();
+    addFeedback(feedback);
+    navigate({ProductBuyNowPage});
+
+    const [feedbacks, setFeedbacks] = useState([]);
+  
+
+  const addFeedback = (feedback) => {
+    const newFeedback = {
+      ...feedback,
+      name: "Victor Magreta",
+      profilePic: "https://via.placeholder.com/150",
+      dateTime: new Date().toLocaleString()
+    };
+    setFeedbacks([...feedbacks, newFeedback]);
+
+  };
+
+};
+
+  const cardStyle = {
+    margin: '0 auto',
+    float: 'none',
+  };
+
   return (
     <div className='flex flex-col items-center justify-center min-h-screen bg-white-100'>
       <div className='bg-white p-8 rounded shadow-md w-full max-w-md'>
         <h1 className='text-2xl font-bold text-center text-blue-600'>Send Feedback.</h1>
         <h3 className='text-center text-gray-600 mb-4'>Your feedback improves experience.</h3>
-        <Form onSubmit={handleSubmit} className="space-y-4">
+        <Form className="space-y-4" onSubmit={handleSubmit} style={cardStyle}>
           <Form.Group controlId="rating">
             <StarRating rating={rating} setRating={setRating} />
           </Form.Group>
@@ -40,7 +66,7 @@ const FeedbackForm = ({ onSubmit }) => {
             />
           </Form.Group>
           <div className="flex justify-center">
-            <Button variant="primary" type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" link="FeedbackFormPage">
+            <Button variant="primary" type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleFeedbackSubmit}>
               Send
             </Button>
           </div>

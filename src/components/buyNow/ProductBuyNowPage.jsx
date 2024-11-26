@@ -144,7 +144,7 @@ const ProductBuyNowPage = ({ feedbacks }) => {
             </div>
             <div>
               <Link to='FeedbackForm'>
-                <button className="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Rate the product</button>
+                <button className="bg-yellow-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Rate the product</button>
               </Link>
             </div>
           </div>
