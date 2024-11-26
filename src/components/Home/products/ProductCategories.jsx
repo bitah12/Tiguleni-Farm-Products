@@ -34,7 +34,7 @@ const ProductCategories = () => {
           <div className="bg-red-500  rounded-md h-[50px] w-[27px]"></div>
           <h2 className="mt-3 text-xl font-bold text-red-500">Farm Products</h2>
         </div>
-      </div><h3 className="text-2xl font-bold mb-6">Products By Categories</h3>
+      </div><h3 className="text-2xl relative -left-[540px] font-bold mb-6">Products By Categories</h3>
       <div className="p-8">
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6">

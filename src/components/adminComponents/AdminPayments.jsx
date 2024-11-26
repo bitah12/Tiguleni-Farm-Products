@@ -28,6 +28,26 @@ const AdminPayments = () => {
     fetchPayments();
   }, [accessToken]);
 
+  useEffect(() => {
+    const fetchPaymentsData = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/withdrawals/all-withdrwals`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`, 
+          },
+        });
+
+        setPaymentsData(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchPaymentsData();
+  }, []);
+
   
   
   const filteredPayments = paymentsData.filter((payment) => {
@@ -69,7 +89,7 @@ const AdminPayments = () => {
           <tr>
             <th className="p-3">#</th>
             <th className="p-3">Amount</th>
-            <th className="p-3">Fee</th>
+            <th className="p-3">Prduct Name</th>
             <th className="p-3">Status</th>
             <th className="p-3">Number</th>
             <th className="p-3">transID</th>
@@ -79,14 +99,14 @@ const AdminPayments = () => {
         <tbody className="text-sm text-gray-700">
           {filteredPayments.length > 0 ? (
             filteredPayments.map((payment, index) => (
-              <tr key={payment.id} className="border-t border-gray-300">
+              <tr key={allSellerwithdrwals.withdrawal_Id} className="border-t border-gray-300">
                 <td className="p-3">{index + 1}</td>
-                <td className="p-3">{payment.amount}</td>
-                <td className="p-3">{payment.fee}</td>
-                <td className="p-3">{payment.status}</td>
-                <td className="p-3">{payment.number}</td>
-                <td className="p-3">{payment.transID}</td>
-                <td className="p-3">{payment.date}</td>
+                <td className="p-3">{allSellerwithdrwals.amountCashedOut}</td>
+                <td className="p-3">{allSellerwithdrwals.fee}</td>
+                <td className="p-3">{allSellerwithdrwals.status}</td>
+                <td className="p-3">{allSellerwithdrwals.mobile}</td>
+                <td className="p-3">{allSellerwithdrwals.transID}</td>
+                <td className="p-3">{allSellerwithdrwals.date}</td>
               </tr>
             ))
           ) : (

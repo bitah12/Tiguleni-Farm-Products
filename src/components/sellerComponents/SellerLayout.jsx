@@ -8,6 +8,7 @@ import SellerPayments from "./SellerPayments";
 import Profile from "./Profile";
 import Product from "../ProductList/product";
 import SellerMessage from "../messaging/SellerMessage";
+import Messaging from "../messaging/Messaging";
 
 const SellerLayout = () => {
   return (
@@ -26,7 +27,7 @@ const SellerLayout = () => {
 
           <Route path="payment" element={<SellerPayments />} />
 
-          <Route path="messages" element={<SellerMessage />} />
+          <Route path="messages" element={<Messaging />} />
 
           <Route path="profile" element={<Profile />} />
 

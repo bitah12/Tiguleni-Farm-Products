@@ -1,27 +1,53 @@
 import React, { useState } from "react";
-import Sidebar from "./Sidebar";
+import { useLocation } from "react-router-dom";
 import ChatArea from "./ChatArea";
+import Sidebar from "./Sidebar";
 import Navbar from "../navbar/Navbar";
 
 const Messaging = () => {
-  const [contacts] = useState([
-    { name: "Nduayhuoo Bitah", status: "alright alright", avatar: "https://via.placeholder.com/40" },
-    { name: "Lali Ackeem", status: "hello", avatar: "https://via.placeholder.com/40" },
-    { name: "Susan", status: "thanks for the quality products", avatar: "https://via.placeholder.com/40" },
-    { name: "Chimwemwe", status: "sent", avatar: "https://via.placeholder.com/40" },
-  ]);
-  const [selectedContact, setSelectedContact] = useState(contacts[0]);
+  const location = useLocation();
+  const { receiverUserId, receiverUsername } = location.state || {};
+  const [currentChat, setCurrentChat] = useState({
+    receiverUserId,
+    receiverUsername,
+  });
+  
+  const user = JSON.parse(localStorage.getItem("user")); 
+  
+  const senderDetails = {
+    senderId: user?.userId,  
+    senderName: user?.username,
+  };
+  const handleSelectContact = (contact) => {
+    setCurrentChat({
+      receiverUserId: contact.contactId,
+      receiverUsername: contact.name,
+    });
+  };
+  const shouldShowNavbar = location.pathname !== "/seller/messages";
 
-  return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <Navbar />
-      <main className="flex-grow flex">
-        <Sidebar contacts={contacts} selectContact={setSelectedContact} />
-        <ChatArea selectedContact={selectedContact} />
-      </main>
+  return (<div className=" h-screen">
+    {shouldShowNavbar && <Navbar />}
+
+    <div className="flex h-full">
+      
+      <Sidebar senderId={senderDetails.senderId} onSelectContact={handleSelectContact} />
+      
+      <div className="flex-grow">
+        {currentChat.receiverUserId ? (
+          <ChatArea
+            senderDetails={senderDetails}
+            receiverDetails={currentChat}
+          />
+        ) : (
+          <p className="text-center mt-10 text-gray-500">Select a contact to start chatting.</p>
+        )}
+      </div>
     </div>
+  </div>
+  
+    
   );
 };
-
 
 export default Messaging;

@@ -23,22 +23,54 @@ ChartJS.register(
 );
 
 const AdminDashboard = () => {
-  
+  const [walletData, setWalletData] = useState(null);
+  const accessToken = localStorage.getItem("token");
+
   const [lineChartData, setLineChartData] = useState({
     labels: [],
     datasets: [],
   });
 
+  const fetchSellerWallet = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_BASE_URL}/sellerwallet/summary`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch wallet data");
+      }
+
+      const data = await response.json();
+      setWalletData(data.sellerwallet);
+    } catch (error) {
+      console.error("Error fetching seller wallet:", error);
+    }
+  };
+  useEffect(() => {
+    fetchSellerWallet();
+  }, []);
+
   const fetchMonthlySalesData = async () => {
     try {
       const accessToken = localStorage.getItem("token");
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/sales/allsalesAdmin`,{
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`, 
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_BASE_URL}/sales/allsalesAdmin`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       const data = await response.json();
       setLineChartData(data);
     } catch (error) {
@@ -79,17 +111,27 @@ const AdminDashboard = () => {
         <div className="grid grid-cols-3 gap-6 mb-6">
           <div className="bg-blue-200 p-4 rounded-lg">
             <h3 className="text-sm font-medium">Main Balance</h3>
-            <p className="text-3xl font-bold">MWK 5,001,623</p>
+            <p className="text-3xl font-bold">
+              MWK {walletData?.mainWalletBalance?.toLocaleString()}
+            </p>
           </div>
           <div className="bg-blue-200 p-4 rounded-lg">
             <h3 className="text-sm font-medium">Total Sales</h3>
-            <p className="text-3xl font-bold">MWK 10,001,623</p>
-            <p className="text-xs">Total Products: 400</p>
+            <p className="text-3xl font-bold">
+              MWK{walletData?.totalSales?.toLocaleString()}
+            </p>
+            <p className="text-xs">
+              Total Products:{walletData?.totalNumberOfSales}
+            </p>
           </div>
           <div className="bg-blue-200 p-4 rounded-lg">
             <h3 className="text-sm font-medium">Cash Out</h3>
-            <p className="text-3xl font-bold">MWK 5,000,000</p>
-            <p className="text-xs">20 Times</p>
+            <p className="text-3xl font-bold">
+              MWK {walletData?.totalCashOut?.toLocaleString()}
+            </p>
+            <p className="text-xs">
+              {walletData?.totalNumberOfWithdrawals} Times
+            </p>
           </div>
         </div>
 

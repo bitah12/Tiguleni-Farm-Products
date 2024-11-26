@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import StarRating from './StarRating';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './RatingAndReviews.css';
 
 const FeedbackForm = ({ onSubmit }) => {
+  const { productId } = useParams();
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (rating === 0 && review.trim() === '') {
@@ -16,14 +17,43 @@ const FeedbackForm = ({ onSubmit }) => {
       return;
     }
 
-    onSubmit({ rating, review });
-    setRating(0);
-    setReview('');
-  };
+    const accessToken = localStorage.getItem('token');
+    if (!accessToken) {
+      alert('Please log in to submit feedback.');
+      return;
+    }
 
-  const cardStyle = {
-    margin: '0 auto',
-    float: 'none',
+    const feedbackData = {
+      rating,
+      review,
+      productId,
+    };
+
+    try {
+      const response = await fetch('http://localhost:3000/ratesandreviews/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(feedbackData),
+      });
+
+      if (!response.ok) {
+        alert('Failed to submit feedback. Please try again.');
+      }
+      alert('Feedback submitted successfully!');
+      const responseData = await response.json();
+      console.log('Feedback submitted:', responseData);
+
+      onSubmit({ rating, review });
+
+      setRating(0);
+      setReview('');
+      
+    } catch (err) {
+      
+    }
   };
 
   return (
@@ -31,7 +61,7 @@ const FeedbackForm = ({ onSubmit }) => {
       <div className='content'>
         <h1>Send Feedback.</h1>
         <h3>Your feedback improves experience.</h3>
-        <Form onSubmit={handleSubmit} className="justify-content-center" style={cardStyle}>
+        <Form onSubmit={handleSubmit} className="justify-content-center">
           <Form.Group controlId="rating">
             <StarRating rating={rating} setRating={setRating} />
           </Form.Group>
@@ -45,7 +75,7 @@ const FeedbackForm = ({ onSubmit }) => {
             />
           </Form.Group>
           <div className="button-group">
-            <Button variant="primary" type="submit" className="justify-content-center">
+            <Button variant="primary" type="submit">
               Send
             </Button>
             <Link to="/reviews" className="btn btn-link">

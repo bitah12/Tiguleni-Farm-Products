@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ControlledSwitches from "./ControlledSwitches";
+import axios from "axios";
 
 const Payments = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -7,6 +8,10 @@ const Payments = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const accessToken = localStorage.getItem("token");
+  const [paymentsData, setPaymentsData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const handleCashOut = () => {
     setShowPopup(true);
   };
@@ -21,7 +26,7 @@ const Payments = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${accessToken}`
+          "Authorization": `Bearer ${accessToken}`,
         },
         body: JSON.stringify(requestData),
       });
@@ -30,7 +35,7 @@ const Payments = () => {
         const data = await response.json();
         alert("Cash out successful!");
         console.log("Cash out success:", data);
-        
+
         setAmount("");
         setPhoneNumber("");
       } else {
@@ -45,50 +50,36 @@ const Payments = () => {
     setShowPopup(false);
   };
 
-  const paymentsData = [
-    {
-      id: 1,
-      amount: 90000,
-      fee: "4%",
-      status: "success",
-      number: "994543849",
-      transID: "vigothrgrpjtg9f",
-      date: "2024/10/18",
-    },
-    {
-      id: 2,
-      amount: 489363,
-      fee: "4%",
-      status: "success",
-      number: "994543849",
-      transID: "vigothrgrpjtg9f",
-      date: "2024/10/18",
-    },
-    {
-      id: 3,
-      amount: 750000,
-      fee: "4%",
-      status: "success",
-      number: "994543849",
-      transID: "vigothrgrpjtg9f",
-      date: "2024/10/18",
-    },
-    {
-      id: 4,
-      amount: 30000,
-      fee: "4%",
-      status: "success",
-      number: "994543849",
-      transID: "vigothrgrpjtg9f",
-      date: "2024/10/18",
-    },
-  ];
+  useEffect(() => {
+    const fetchPaymentsData = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/withdrawals/seller-withdrwals`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        
+        if (response.data && response.data.allSellerWithdrawals) {
+          setPaymentsData(response.data.allSellerWithdrawals);
+        } else {
+          setPaymentsData([]);
+        }
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchPaymentsData();
+  }, [accessToken]);
 
   const filteredPayments = paymentsData.filter((payment) => {
     return (
-      payment.transID.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      payment.number.includes(searchTerm) ||
-      payment.amount.toString().includes(searchTerm)
+      payment.transID?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      payment.mobile?.includes(searchTerm) ||
+      payment.amountCashedOut?.toString().includes(searchTerm)
     );
   });
 
@@ -122,31 +113,31 @@ const Payments = () => {
         <thead className="bg-gray-200 text-sm text-gray-600">
           <tr>
             <th className="p-3">#</th>
-            <th className="p-3">Amount</th>
-            <th className="p-3">Fee</th>
+            <th className="p-3">Amount Cashed Out</th>
+            <th className="p-3">Mobile</th>
             <th className="p-3">Status</th>
-            <th className="p-3">Number</th>
-            <th className="p-3">transID</th>
+            <th className="p-3">Transaction ID</th>
+            <th className="p-3">Seller Email</th>
             <th className="p-3">Date</th>
           </tr>
         </thead>
         <tbody className="text-sm text-gray-700">
           {filteredPayments.length > 0 ? (
             filteredPayments.map((payment, index) => (
-              <tr key={payment.id} className="border-t border-gray-300">
+              <tr key={payment.withdrawal_Id} className="border-t border-gray-300">
                 <td className="p-3">{index + 1}</td>
-                <td className="p-3">{payment.amount}</td>
-                <td className="p-3">{payment.fee}</td>
+                <td className="p-3">{payment.amountCashedOut}</td>
+                <td className="p-3">{payment.mobile}</td>
                 <td className="p-3">{payment.status}</td>
-                <td className="p-3">{payment.number}</td>
                 <td className="p-3">{payment.transID}</td>
-                <td className="p-3">{payment.date}</td>
+                <td className="p-3">{payment.seller?.email}</td>
+                <td className="p-3">{new Date(payment.date).toLocaleString()}</td>
               </tr>
             ))
           ) : (
             <tr>
               <td colSpan="7" className="p-3 text-center">
-                No matching payments found.
+                {loading ? "Loading..." : "No matching payments found."}
               </td>
             </tr>
           )}

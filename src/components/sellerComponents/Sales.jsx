@@ -1,9 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import ControlledSwitches from "./ControlledSwitches";
 
 const Sales = () => {
+  const [salesData, setSalesData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const accessToken = localStorage.getItem("token");
+
+  useEffect(() => {
+    const fetchSalesData = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_BASE_URL}/sales/sellersales`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        setSalesData(response.data);
+        if (Array.isArray(response.data)) {
+          setSalesData(response.data);
+        } else if (response.data && Array.isArray(response.data.sales)) {
+          setSalesData(response.data.sales);
+        } else {
+          setSalesData([]); 
+        }
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch sales data.");
+        setLoading(false);
+      }
+    };
+
+    fetchSalesData();
+  }, [accessToken]);
+
+  if (loading) {
+    return <div className="p-6">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="p-6 text-red-500">{error}</div>;
+  }
+
   return (
-    <div className="p-6">
+    <div className="p-6 ">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-4xl font-semibold">Sales</h2>
         <div className="flex items-center">
@@ -11,6 +54,7 @@ const Sales = () => {
           <ControlledSwitches />
         </div>
       </div>
+
       {/* Recent Transactions */}
       <div className="bg-white p-4 border rounded-lg">
         <h3 className="text-lg font-semibold mb-4">Recent Transactions</h3>
@@ -27,24 +71,25 @@ const Sales = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="py-2">1</td>
-              <td className="py-2">Ronald@gmail.com</td>
-              <td className="py-2">Beef</td>
-              <td className="py-2">20kg</td>
-              <td className="py-2">MWK400000</td>
-              <td className="py-2">Success</td>
-              <td className="py-2">2024/10/18</td>
-            </tr>
-            <tr>
-              <td className="py-2">2</td>
-              <td className="py-2">isipho@gmail.com</td>
-              <td className="py-2">Goat</td>
-              <td className="py-2">7</td>
-              <td className="py-2">MWK749995</td>
-              <td className="py-2">Success</td>
-              <td className="py-2">2024/10/18</td>
-            </tr>
+            {salesData.length === 0 ? (
+              <tr>
+                <td colSpan="7" className="text-center py-4">
+                  No sales data available.
+                </td>
+              </tr>
+            ) : (
+              salesData.map((sale, index) => (
+                <tr key={sale.payment_Id}>
+                  <td className="py-2">{index + 1}</td>
+                  <td className="py-2">{sale.customerEmail}</td>
+                  <td className="py-2">{sale.product_name}</td>
+                  <td className="py-2">{sale.quantityBought}</td>
+                  <td className="py-2">{sale.amount}</td>
+                  <td className="py-2">{sale.status}</td>
+                  <td className="py-2">{new Date(sale.date).toLocaleDateString()}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

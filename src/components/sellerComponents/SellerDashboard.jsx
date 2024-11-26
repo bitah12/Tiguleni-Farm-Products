@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Line, Pie } from "react-chartjs-2";
-
+import axios from "axios";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -24,15 +24,17 @@ ChartJS.register(
 );
 
 const SellerDashboard = () => {
-  const [lineChartData, setLineChartData] = useState({
-    labels: [],
-    datasets: [],
-  });
+  const [lineChartData, setLineChartData] = useState({ labels: [], datasets: [] });
   const [walletData, setWalletData] = useState(null);
+  const [salesData, setSalesData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const accessToken = localStorage.getItem("token");
 
   const fetchSellerWallet = async () => {
     try {
+      setLoading(true);
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/sellerwallet`,
         {
@@ -43,24 +45,22 @@ const SellerDashboard = () => {
           },
         }
       );
-
       if (!response.ok) {
         throw new Error("Failed to fetch wallet data");
       }
-
       const data = await response.json();
       setWalletData(data.sellerwallet);
-    } catch (error) {
-      console.error("Error fetching seller wallet:", error);
+    } catch (err) {
+      setError("Error fetching wallet data.");
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchSellerWallet();
-  }, []);
-
   const fetchMonthlySalesData = async () => {
     try {
+      setLoading(true);
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/sales/dashboard/seller`,
         {
@@ -71,16 +71,55 @@ const SellerDashboard = () => {
           },
         }
       );
+      if (!response.ok) {
+        throw new Error("Failed to fetch monthly sales data");
+      }
       const data = await response.json();
       setLineChartData(data);
-    } catch (error) {
-      console.error("Error fetching sales data:", error);
+    } catch (err) {
+      setError("Error fetching monthly sales data.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchSalesData = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_BASE_URL}/sales/sellersales`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      const data = response.data;
+      if (Array.isArray(data)) {
+        setSalesData(data);
+      } else if (data?.sales && Array.isArray(data.sales)) {
+        setSalesData(data.sales);
+      } else {
+        setSalesData([]);
+      }
+    } catch (err) {
+      setError("Error fetching sales data.");
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchMonthlySalesData();
-  }, []);
+    if (accessToken) {
+      fetchSellerWallet();
+      fetchMonthlySalesData();
+      fetchSalesData();
+    } else {
+      setError("Access token is missing. Please log in.");
+    }
+  }, [accessToken]);
 
   const pieChartData = {
     labels: ["Beef", "Goat", "Chicken", "Pork"],
@@ -108,7 +147,8 @@ const SellerDashboard = () => {
             <ControlledSwitches />
           </div>
         </div>
-
+        {loading && <p>Loading...</p>}
+        {error && <p className="text-red-500">{error}</p>}
         <div className="grid grid-cols-3 gap-6 mb-6">
           <div className="bg-blue-200 p-4 rounded-lg">
             <h3 className="text-sm font-medium">Main Balance</h3>
@@ -119,10 +159,10 @@ const SellerDashboard = () => {
           <div className="bg-blue-200 p-4 rounded-lg">
             <h3 className="text-sm font-medium">Total Sales</h3>
             <p className="text-3xl font-bold">
-              MWK{walletData?.totalSales?.toLocaleString()}
+              MWK {walletData?.totalSales?.toLocaleString()}
             </p>
             <p className="text-xs">
-              Total Products:{walletData?.totalNumberOfSales}
+              Total Products: {walletData?.totalNumberOfSales}
             </p>
           </div>
           <div className="bg-blue-200 p-4 rounded-lg">
@@ -136,6 +176,7 @@ const SellerDashboard = () => {
           </div>
         </div>
 
+        {/* Charts */}
         <div className="grid grid-cols-2 gap-6 mb-6">
           <div className="bg-white p-4 border rounded-lg">
             <h3 className="text-sm font-medium">Sales Progress</h3>
@@ -168,24 +209,27 @@ const SellerDashboard = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="py-2">1</td>
-                <td className="py-2">Ronald@gmail.com</td>
-                <td className="py-2">Beef</td>
-                <td className="py-2">20kg</td>
-                <td className="py-2">MWK400000</td>
-                <td className="py-2">Success</td>
-                <td className="py-2">2024/10/18</td>
-              </tr>
-              <tr>
-                <td className="py-2">2</td>
-                <td className="py-2">isipho@gmail.com</td>
-                <td className="py-2">Goat</td>
-                <td className="py-2">7</td>
-                <td className="py-2">MWK749995</td>
-                <td className="py-2">Success</td>
-                <td className="py-2">2024/10/18</td>
-              </tr>
+              {salesData.length === 0 ? (
+                <tr>
+                  <td colSpan="7" className="text-center py-4">
+                    No sales data available.
+                  </td>
+                </tr>
+              ) : (
+                salesData.map((sale, index) => (
+                  <tr key={sale.payment_Id}>
+                    <td className="py-2">{index + 1}</td>
+                    <td className="py-2">{sale.customerEmail}</td>
+                    <td className="py-2">{sale.product_name}</td>
+                    <td className="py-2">{sale.quantityBought}</td>
+                    <td className="py-2">{sale.amount}</td>
+                    <td className="py-2">{sale.status}</td>
+                    <td className="py-2">
+                      {new Date(sale.date).toLocaleDateString()}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
