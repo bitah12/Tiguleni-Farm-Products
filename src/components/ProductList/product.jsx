@@ -23,7 +23,7 @@ const Product = () => {
     formData.append("location", location);
     formData.append("quantity_amount", quantity);
     formData.append("category",category);
-    formData.append("quantity_metric", "kg");
+    formData.append("quantity_metric", "k
     formData.append("image", image);
 
     try {
