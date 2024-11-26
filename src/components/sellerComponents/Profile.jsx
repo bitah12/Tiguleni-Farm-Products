@@ -10,8 +10,7 @@ const ProfilePage = () => {
     profileImage: null,
   });
 
-  const API_BASE_URL = 'http://localhost:3000/userprofile'; // Replace with your backend URL
-
+  const API_BASE_URL = '${import.meta.env.VITE_BACKEND_BASE_URL}/userprofile';
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -62,7 +61,7 @@ const ProfilePage = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/userprofile/update-image`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/userprofile/update-image`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

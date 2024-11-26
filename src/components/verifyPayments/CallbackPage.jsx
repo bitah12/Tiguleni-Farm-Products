@@ -20,7 +20,7 @@ const CallbackPage = () => {
 
   const verifyPayment = async (tx_ref) => {
     try {
-      const response = await fetch(`http://localhost:3000/payments/verifying/${tx_ref}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/payments/verifying/${tx_ref}`, {
         method: 'GET',
       });
 

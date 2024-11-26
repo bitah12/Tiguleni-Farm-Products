@@ -12,7 +12,7 @@ const NewProducts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:3000/products"); 
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/products`); 
         const data = await response.json();
         setProducts(data); 
       } catch (error) {

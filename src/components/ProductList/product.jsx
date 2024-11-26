@@ -26,7 +26,7 @@ const Product = () => {
     formData.append("image", image);
 
     try {
-      const response = await fetch("http://localhost:3000/products/post", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/products/post`, {
         method: "POST",
         headers: {
         "Authorization": `Bearer ${accessToken}`, 

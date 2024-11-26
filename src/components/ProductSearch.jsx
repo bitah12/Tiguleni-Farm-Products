@@ -30,7 +30,7 @@ const ProductSearch = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:3000/products");
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/products`);
         if (!response.ok) {
           throw new Error("Failed to fetch products");
         }

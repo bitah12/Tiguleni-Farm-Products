@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ProductCard from "./ProductCard";  // Make sure ProductCard is imported
-import { Link } from "react-router-dom";
+import ProductCard from "./ProductCard";  
 
 function TrendingProducts() {
   const [products, setProducts] = useState([]);
@@ -11,7 +10,7 @@ function TrendingProducts() {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:3000/products");  // Adjust URL as needed
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/products`); 
         if (!response.ok) throw new Error("Failed to fetch products");
         const data = await response.json();
         setProducts(data);
