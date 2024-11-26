@@ -1,4 +1,4 @@
-import ThirdBannerPic from '/src/assets/ThirdBanner.jpg'
+import ThirdBannerPic from '/public/ThirdBanner.jpg'
 
 function ThirdBanner() {
     return (

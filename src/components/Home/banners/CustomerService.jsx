@@ -1,4 +1,4 @@
-import CustomerServicePic from '/src/assets/CustomerServicePic.png'
+import CustomerServicePic from '/public/CustomerServicePic.png'
 
 function CustomerService() {
     return (

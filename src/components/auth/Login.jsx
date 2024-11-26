@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
-import LoginImage from "/src/assets/loginImage.png";
+import LoginImage from "/public/loginImage.png";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "/src/store/authSlice.jsx";
 

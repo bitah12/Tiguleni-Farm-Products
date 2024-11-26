@@ -1,15 +1,15 @@
-import CropsIcon from "/src/assets/crops.png";
-import LivestockIcon from "/src/assets/livestock.png";
-import MachineryIcon from "/src/assets/machinery.png";
-import AgrochemicalsIcon from "/src/assets/agrochemicals.png";
-import FertilizersIcon from "/src/assets/fertilizers.png";
-import SeedsIcon from "/src/assets/seeds.png";
-import DairyIcon from "/src/assets/dairy.png";
-import PoultryIcon from "/src/assets/poultry.png";
-import FruitsIcon from "/src/assets/fruits.png";
-import VegetablesIcon from "/src/assets/vegetables.png";
-import AnimalFeedIcon from "/src/assets/animal_feed.png";
-import FarmToolsIcon from "/src/assets/farm_tools.png";
+import CropsIcon from "/public/crops.png";
+import LivestockIcon from "/public/livestock.png";
+import MachineryIcon from "/public/machinery.png";
+import AgrochemicalsIcon from "/public/agrochemicals.png";
+import FertilizersIcon from "/public/fertilizers.png";
+import SeedsIcon from "/public/seeds.png";
+import DairyIcon from "/public/dairy.png";
+import PoultryIcon from "/public/poultry.png";
+import FruitsIcon from "/public/fruits.png";
+import VegetablesIcon from "/public/vegetables.png";
+import AnimalFeedIcon from "/public/animal_feed.png";
+import FarmToolsIcon from "/public/farm_tools.png";
 
 const categories = [
   { name: "Crops", icon: CropsIcon },

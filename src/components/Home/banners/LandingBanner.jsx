@@ -1,4 +1,4 @@
-import LandingComplete from '/src/assets/LandingComplete.jpg'
+import LandingComplete from '/public/LandingComplete.jpg'
 
 function LandingBanner() {
     return (

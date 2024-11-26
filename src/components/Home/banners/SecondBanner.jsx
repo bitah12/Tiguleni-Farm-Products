@@ -1,4 +1,4 @@
-import SecondBannerComplete from "/src/assets/SecondBannerComplete.png";
+import SecondBannerComplete from "/public/SecondBannerComplete.png";
 
 
 function SecondBanner() {
