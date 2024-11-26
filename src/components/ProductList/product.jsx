@@ -122,12 +122,12 @@ const Product = () => {
           </div>
           <div className="mb-4">
             <label className="block text-black text-sm font-bold mb-2">
-              Location
+              Category
             </label>
             <input
               type="text"
               value={category}
-              onChange={(e) => setLocation(e.target.value)}
+              onChange={(e) => setCategory(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
               required
             />
