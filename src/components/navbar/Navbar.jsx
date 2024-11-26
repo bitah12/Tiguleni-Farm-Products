@@ -1,14 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiHeart, FiShoppingCart, FiUser } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "/src/store/authSlice";
 
 const Navbar = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth); // For user authentication
+  const [uniqueProductCount, setUniqueProductCount] = useState(0); // Unique product count
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    // Function to calculate unique product count from localStorage
+    const updateProductCount = () => {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const uniqueIds = new Set(cart.map((item) => item.productId));
+      setUniqueProductCount(uniqueIds.size); // Count of unique product IDs
+    };
+
+    updateProductCount();
+
+    // Listen for localStorage changes
+    window.addEventListener("storage", updateProductCount);
+
+    return () => {
+      window.removeEventListener("storage", updateProductCount);
+    };
+  }, []);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -51,12 +70,14 @@ const Navbar = () => {
       <div className="flex items-center space-x-6 text-gray-700 relative">
         <FiHeart className="w-5 h-5 cursor-pointer hover:text-black" />
         <div className="relative">
-          <Link to="cart">
+          <Link to="/cart">
             <FiShoppingCart className="w-5 h-5 cursor-pointer hover:text-black" />
             {/* Notification Badge */}
-            <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
-              2
-            </span>
+            {uniqueProductCount > 0 && (
+              <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
+                {uniqueProductCount}
+              </span>
+            )}
           </Link>
         </div>
         {user ? (

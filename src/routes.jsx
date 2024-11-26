@@ -13,6 +13,9 @@ import Cart from "./components/ProductList/cart";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import FeedbackForm from './components/Rates-and-Reviews/FeedbackForm';
 import SellerProfile from "./components/Rates-and-Reviews/SellerProfile";
+import CallbackPage from "./components/verifyPayments/CallbackPage";
+import MyBag from "./components/myBag/MyBag";
+
 
 export const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -70,6 +73,7 @@ export const router = createBrowserRouter([
     ),
   },
   { path: "cart", element: <Cart /> },
+
   
   {
     path: 'productDetails/:productId/FeedbackForm',
@@ -83,5 +87,19 @@ export const router = createBrowserRouter([
   {
     path: '/productDetails/:productId',
     element: <ProductBuyNowPage/>
-  }
+  },
+
+  { path: "productDetails/:productId/FeedbackForm", element: <FeedbackForm /> },
+  {
+    path: "callback",
+    element: (
+      <ProtectedRoute>
+        {" "}
+        <CallbackPage />
+      </ProtectedRoute>
+    ),
+  },
+  {path:"mybag",element:<MyBag/>}
+  
+
 ]);

@@ -32,7 +32,13 @@ export const cashOut = createAsyncThunk(
 
 export const buyNow = createAsyncThunk(
   "payments/buyNow",
-  async ({ quantity, productId, accessToken }, { rejectWithValue }) => {
+  async ({ quantity, productId }, { rejectWithValue }) => {
+    const accessToken = localStorage.getItem("token"); 
+
+    if (!accessToken) {
+      return rejectWithValue("User is not authenticated.");
+    }
+
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/payments`, {
         method: "POST",
@@ -49,7 +55,6 @@ export const buyNow = createAsyncThunk(
       }
 
       const data = await response.json();
-
       if (data.statusCode === 200 && data.data.checkout_url) {
         window.location.href = data.data.checkout_url;
       } else {
@@ -60,6 +65,7 @@ export const buyNow = createAsyncThunk(
     }
   }
 );
+
 
 
 const paymentsSlice = createSlice({
