@@ -12,6 +12,8 @@ import Messaging from "./components/messaging/Messaging";
 import Cart from "./components/ProductList/cart";
 import FeedbackForm from "./components/Rates-and-Reviews/FeedbackForm";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import CallbackPage from "./components/verifyPayments/CallbackPage";
+import MyBag from "./components/myBag/MyBag";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -69,4 +71,16 @@ export const router = createBrowserRouter([
     ),
   },
   { path: "cart", element: <Cart /> },
+  { path: "productDetails/:productId/FeedbackForm", element: <FeedbackForm /> },
+  {
+    path: "callback",
+    element: (
+      <ProtectedRoute>
+        {" "}
+        <CallbackPage />
+      </ProtectedRoute>
+    ),
+  },
+  {path:"mybag",element:<MyBag/>}
+  
 ]);
