@@ -3,7 +3,7 @@ import axios from "axios";
 import {jwtDecode} from "jwt-decode";
 import { toast } from "react-toastify";
 
-const apiUrl = "http://localhost:3000/authentication";
+const apiUrl = `${import.meta.env.VITE_BACKEND_BASE_URL}/authentication`;
 
 // login
 export const loginUser = createAsyncThunk(

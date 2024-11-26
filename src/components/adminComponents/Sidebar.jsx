@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import dashboardIcon from "/public/dashboardIcon.png";
-import salesIcon from "/public/Seller.png";
+import salesIcon from "/public/sales.png";
 import manageProductsIcon from "/public/ManageProducts.png";
 import paymentIcon from "/public/Payment.png";
 import profileIcon from "/public/Profile.png";
