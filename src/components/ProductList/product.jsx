@@ -10,6 +10,7 @@ const Product = () => {
   const [tempImage, setTempImage] = useState(null);
   const [location, setLocation] = useState(""); 
   const accessToken = localStorage.getItem("token")
+  const [category,setCategory]=useState("")
 
   
   const handleSubmit = async (e) => {
@@ -21,11 +22,12 @@ const Product = () => {
     formData.append("price", price);
     formData.append("location", location);
     formData.append("quantity_amount", quantity);
+    formData.append("category",category);
     formData.append("quantity_metric", "kg");
     formData.append("image", image);
 
     try {
-      const response = await fetch("http://localhost:3000/products/post", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/products/post`, {
         method: "POST",
         headers: {
         "Authorization": `Bearer ${accessToken}`, 
@@ -42,6 +44,7 @@ const Product = () => {
         setLocation("");
         setImage(null);
         setTempImage(null);
+        setCategory("")
         alert("Product successfully added!");
       } else {
         console.error("Failed to save product to database");
@@ -115,6 +118,18 @@ const Product = () => {
             <input
               type="text"
               value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-black text-sm font-bold mb-2">
+              Location
+            </label>
+            <input
+              type="text"
+              value={category}
               onChange={(e) => setLocation(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
               required
