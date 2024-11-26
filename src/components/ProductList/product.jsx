@@ -6,6 +6,7 @@ const Product = () => {
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [category, setCategory] =useState("");
   const [image, setImage] = useState(null);
   const [tempImage, setTempImage] = useState(null);
   const [location, setLocation] = useState(""); 
@@ -19,6 +20,7 @@ const Product = () => {
     formData.append("products_name", productName);
     formData.append("price", price);
     formData.append("location", location);
+    formData.append("category",category);
     formData.append("quantity_amount", quantity);
     formData.append("quantity_metric", "kg");
     formData.append("image", image);
@@ -35,6 +37,7 @@ const Product = () => {
         setProductName("");
         setPrice("");
         setQuantity("");
+        setCategory("");
         setLocation("");
         setImage(null);
         setTempImage(null);
@@ -83,6 +86,19 @@ const Product = () => {
           <div className="mb-4">
             <label className="block text-black text-sm font-bold mb-2">
               Price
+            </label>
+            <input
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-black text-sm font-bold mb-2">
+              Category
             </label>
             <input
               type="number"
