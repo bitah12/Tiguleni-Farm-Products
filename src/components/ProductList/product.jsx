@@ -12,12 +12,8 @@ const Product = () => {
   const [location, setLocation] = useState(""); 
   const accessToken = localStorage.getItem("token")
   
-
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-
     const formData = new FormData();
     formData.append("products_name", productName);
     formData.append("price", price);
