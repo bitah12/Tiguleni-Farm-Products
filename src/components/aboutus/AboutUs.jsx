@@ -31,7 +31,7 @@ export default function AboutUs() {
 
       <div className="flex justify-end">
         <img
-          src="/src/assets/Abouts.png"
+          src="/Abouts.png"
           alt="CustomerInsight"
           className="w-[650px] h-[500px] object-cover"
         />

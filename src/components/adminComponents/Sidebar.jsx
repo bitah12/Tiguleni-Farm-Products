@@ -1,14 +1,14 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import dashboardIcon from "/public/dashboardIcon.png";
-import salesIcon from "/public/sales.png";
-import manageProductsIcon from "/public/ManageProducts.png";
-import paymentIcon from "/public/Payment.png";
-import profileIcon from "/public/Profile.png";
-import sellerIcon from "/public/seller.png";
+import dashboardIcon from "/dashboardIcon.png";
+import salesIcon from "/Sales.png";
+import manageProductsIcon from "/ManageProducts.png";
+import paymentIcon from "/Payment.png";
+import profileIcon from "/Profile.png";
+import sellerIcon from "/Seller.png";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "/src/store/authSlice";
-import helpIcon from "/public/Help.png";
+import helpIcon from "/Help.png";
 
 const Sidebar = () => {
   const { user } = useSelector((state) => state.auth);

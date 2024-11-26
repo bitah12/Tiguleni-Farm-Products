@@ -1,15 +1,15 @@
-import CropsIcon from "/public/crops.png";
-import LivestockIcon from "/public/livestock.png";
-import MachineryIcon from "/public/machinery.png";
-import AgrochemicalsIcon from "/public/agrochemicals.png";
-import FertilizersIcon from "/public/fertilizers.png";
-import SeedsIcon from "/public/seeds.png";
-import DairyIcon from "/public/dairy.png";
-import PoultryIcon from "/public/poultry.png";
-import FruitsIcon from "/public/fruits.png";
-import VegetablesIcon from "/public/vegetables.png";
-import AnimalFeedIcon from "/public/animal_feed.png";
-import FarmToolsIcon from "/public/farm_tools.png";
+import CropsIcon from "/crops.png";
+import LivestockIcon from "/livestock.png";
+import MachineryIcon from "/machinery.png";
+import AgrochemicalsIcon from "/agrochemicals.png";
+import FertilizersIcon from "/fertilizers.png";
+import SeedsIcon from "/seeds.png";
+import DairyIcon from "/dairy.png";
+import PoultryIcon from "/poultry.png";
+import FruitsIcon from "/fruits.png";
+import VegetablesIcon from "/vegetables.png";
+import AnimalFeedIcon from "/animal_feed.png";
+import FarmToolsIcon from "/farm_tools.png";
 
 const categories = [
   { name: "Crops", icon: CropsIcon },
