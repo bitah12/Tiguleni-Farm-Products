@@ -1,15 +1,15 @@
 import React from "react";
 import { NavLink,useNavigate } from "react-router-dom";
 import dashboardIcon from "/src/assets/dashboardIcon.png";
-import salesIcon from "/src/assets/Sales.png";
-import manageProductsIcon from "/src/assets/ManageProducts.png";
-import messagesIcon from "/src/assets/Messages.png";
-import paymentIcon from "/src/assets/Payment.png";
-import profileIcon from "/src/assets/Profile.png";
-import helpIcon from "/src/assets/Help.png";
-import sellerIcon from "/src/assets/Seller.png";
+import salesIcon from "/vercel/path0/src/assets/Sales.png";
+import manageProductsIcon from "/vercel/path0/src/assets/ManageProducts.png";
+import messagesIcon from "/vercel/path0/src/assets/Messages.png";
+import paymentIcon from "/vercel/path0/src/assets/Payment.png";
+import profileIcon from "/vercel/path0/src/assets/Profile.png";
+import helpIcon from "/vercel/path0/src/assets/Help.png";
+import sellerIcon from "/vercel/path0/src/assets/Seller.png";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "/src/store/authSlice";
+import { logout } from "/vercel/path0/src/store/authSlice";
 
 const Sidebar = () => {
 
