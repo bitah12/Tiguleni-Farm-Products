@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import FeedbackForm from './Components/FeedbackForm';
-import SellerProfile from './Components/SellerProfile';
+import FeedbackForm from './FeedbackForm';
+import SellerProfile from './SellerProfile';
 
-
-function Review() {
+const FeedbackManager = () => {
   const [feedbacks, setFeedbacks] = useState([]);
 
   const addFeedback = (feedback) => {
@@ -18,15 +16,11 @@ function Review() {
   };
 
   return (
-    <Router>
-      <div className="Review">
-        <Routes>
-          <Route path="/feedback" element={<FeedbackForm onSubmit={addFeedback} />} />
-          <Route path="/reviews" element={<SellerProfile feedbacks={feedbacks} />} />
-        </Routes>
-      </div>
-    </Router>
+    <div>
+      <FeedbackForm onSubmit={addFeedback} />
+      <SellerProfile feedbacks={feedbacks} />
+    </div>
   );
-}
+};
 
-export default Review;
+export default FeedbackManager;
