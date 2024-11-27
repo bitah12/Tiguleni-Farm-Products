@@ -6,12 +6,12 @@ const Product = () => {
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [category, setCategory] =useState("");
+  const [category, setCategory] = useState("");
   const [image, setImage] = useState(null);
   const [tempImage, setTempImage] = useState(null);
-  const [location, setLocation] = useState(""); 
-  const accessToken = localStorage.getItem("token")
-  
+  const [location, setLocation] = useState("");
+  const accessToken = localStorage.getItem("token");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -19,18 +19,21 @@ const Product = () => {
     formData.append("price", price);
     formData.append("location", location);
     formData.append("quantity_amount", quantity);
-    formData.append("category",category);
-    formData.append("quantity_metric", "kg")
+    formData.append("category", category);
+    formData.append("quantity_metric", "kg");
     formData.append("image", image);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/products/post`, {
-        method: "POST",
-        headers: {
-        "Authorization": `Bearer ${accessToken}`, 
-        },
-        body: formData,
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_BASE_URL}/products/post`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: formData,
+        }
+      );
 
       if (response.ok) {
         const savedProduct = await response.json();
@@ -39,9 +42,10 @@ const Product = () => {
         setPrice("");
         setQuantity("");
         setLocation("");
+        setCategory("");
         setImage(null);
         setTempImage(null);
-        setCategory("")
+
         alert("Product successfully added!");
       } else {
         console.error("Failed to save product to database");
@@ -52,9 +56,12 @@ const Product = () => {
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
-    setTempImage(URL.createObjectURL(file));
+    if (e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setImage(file);
+      setTempImage(URL.createObjectURL(file));
+      console.log("File selected:", file.name);
+    }
   };
 
   return (
@@ -73,10 +80,14 @@ const Product = () => {
           encType="multipart/form-data"
         >
           <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2">
+            <label
+              htmlFor="productName"
+              className="block text-black text-sm font-bold mb-2"
+            >
               Product Name
             </label>
             <input
+              id="productName"
               type="text"
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
@@ -85,10 +96,14 @@ const Product = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2">
+            <label
+              htmlFor="price"
+              className="block text-black text-sm font-bold mb-2"
+            >
               Price
             </label>
             <input
+              id="price"
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
@@ -97,10 +112,14 @@ const Product = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2">
+            <label
+              htmlFor="quantity"
+              className="block text-black text-sm font-bold mb-2"
+            >
               Quantity
             </label>
             <input
+              id="quantity"
               type="number"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
@@ -109,10 +128,14 @@ const Product = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2">
+            <label
+              htmlFor="location"
+              className="block text-black text-sm font-bold mb-2"
+            >
               Location
             </label>
             <input
+              id="location"
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
@@ -121,10 +144,14 @@ const Product = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2">
+            <label
+              htmlFor="category"
+              className="block text-black text-sm font-bold mb-2"
+            >
               Category
             </label>
             <input
+              id="category"
               type="text"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -133,10 +160,14 @@ const Product = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2">
+            <label
+              htmlFor="productImage"
+              className="block text-black text-sm font-bold mb-2"
+            >
               Product Image
             </label>
             <input
+              id="productImage"
               type="file"
               onChange={handleImageChange}
               className="shadow appearance-none border w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
@@ -158,30 +189,6 @@ const Product = () => {
             Add Product
           </button>
         </form>
-      </div>
-      <div className="mt-8 w-full px-8">
-        <h2 className="text-lg font-bold mb-4">Products</h2>
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {products.map((product, index) => (
-            <li
-              key={index}
-              className="border p-4 rounded-lg flex flex-col justify-between"
-            >
-              <div>
-                {product.imageUrl && (
-                  <img
-                    src={product.imageUrl}
-                    alt={product.products_name}
-                    className="w-full h-32 object-cover mb-2"
-                  />
-                )}
-                <div className="mb-2">
-                  {product.products_name} - ${product.price} - {product.quantity_amount}
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );
