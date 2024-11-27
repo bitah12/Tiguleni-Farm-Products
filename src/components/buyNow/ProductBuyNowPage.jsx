@@ -22,7 +22,7 @@ console.log(productId)
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await fetch(`${VITE_BACKEND_BASE_URL}/products/buy:?productId=${productId}`);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/products/buy:?productId=${productId}`);
         //if (!response.ok) throw new Error("Failed to fetch product details");
 
         const data = await response.json();
@@ -79,11 +79,18 @@ console.log({ quantity, productId, accessToken })
   };
 
   
-
   if (!product) {
-    return <div className="text-center mt-24 text-red-600">Product not found!</div>;
+    return (
+      <div>
+        <Navbar />
+        <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+          <p className="text-gray-500 text-lg animate-pulse">Fetching product details...</p>
+        </div>
+        <Footer />
+      </div>
+    );
   }
-
+  
   return (
     <div>
       <Navbar />
@@ -162,7 +169,7 @@ console.log({ quantity, productId, accessToken })
         </div>
       </div>
       <div>
-        <SellerProfile feedbacks={feedbacks} />
+        {/* <SellerProfile feedbacks={feedbacks} /> */}
       </div>
       <Footer />
     </div>
